@@ -1,0 +1,20 @@
+{
+  "name": "flywall-api",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsc",
+    "dev": "rm -rf dist && tsc && npm start",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "@types/node": "^13.5.0",
+    "ts-node": "^8.6.2"
+  }
+}
