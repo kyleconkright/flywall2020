@@ -6,7 +6,6 @@ interface Props {
 }
 
 const MemberPage: NextPage<Props> = ({ member, ...rest }) => {
-  console.log("rest >> ", rest);
   return (
     <div>
       <Head>
