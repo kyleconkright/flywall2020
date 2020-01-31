@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
-// import * as cors from 'cors';
+const cors = require("cors");
 // import { corsOptions } from './utils/cors-options';
 const routes_1 = require("./routes");
 // import { isDevEnv } from "./controllers/utilities";
@@ -17,7 +17,7 @@ class App {
     config() {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
-        // this.app.use(cors(corsOptions));
+        this.app.use(cors());
     }
 }
 exports.default = new App().app;

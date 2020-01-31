@@ -11,9 +11,11 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "http-proxy-middleware": "^0.20.0",
     "typescript": "^3.7.5"
   },
   "devDependencies": {
+    "@types/http-proxy-middleware": "^0.19.3",
     "@types/node": "^13.5.0",
     "ts-node": "^8.6.2"
   }
