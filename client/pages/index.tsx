@@ -3,10 +3,19 @@ import Head from "next/head";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { loadMembers, loadMembersClient } from "../redux/actions";
+import styled from 'styled-components';
+import MemberCard from "../components/member-card";
 interface Props {
   members?: any;
   isServer?: boolean;
 }
+
+const Grid = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 1rem;
+  padding: 1rem;
+`
 
 class Page extends Component<any> {
   static async getInitialProps(props) {
@@ -28,26 +37,11 @@ class Page extends Component<any> {
   render() {
     const members = this.props.members || [];
     return (
-      <div>
-        <Head>
-          <title>Senate Members</title>
-        </Head>
-        Members ({members.length})
-        <ul>
+        <Grid>
           {members.map(member => {
-            return (
-              <li key={member.id}>
-                <Link href={`/member/${member.id}`}>
-                  <a>
-                    {member.short_title} {member.first_name} {member.last_name}{" "}
-                    ({member.id})
-                  </a>
-                </Link>
-              </li>
-            );
+            return  <MemberCard key={member.id} member={member} />
           })}
-        </ul>
-      </div>
+        </Grid>
     );
   }
 }

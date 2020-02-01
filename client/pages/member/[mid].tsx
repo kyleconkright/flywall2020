@@ -70,7 +70,7 @@ class MemberIdPage extends Component<Props> {
                                             <div
                                               style={{
                                                 margin: "10px",
-                                                border: "1px solid lightgrey"
+                                                border: "1px solid grey1"
                                               }}
                                             >
                                               {Object.entries(e).map(
