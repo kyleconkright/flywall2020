@@ -27,7 +27,7 @@ export class Routes {
     //   }
     // });
 
-    app.get('/api/members', getMembers);
+    app.get('/api/members/:chamber/:chamberNumber', getMembers);
     app.get('/api/member/:memberId', getMember);
     app.get('/api/member/:memberId/votes', getMemberVotes);
 

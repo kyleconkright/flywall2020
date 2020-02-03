@@ -14,10 +14,12 @@ const propublica = require("../helpers/propublica");
 function getMembers(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield axios_1.default.get(propublica.members('senate'), propublica.headers);
+            console.log(request.params.chamber, request.params.chamberNumber);
+            const result = yield axios_1.default.get(propublica.members(request.params.chamber, request.params.chamberNumber), propublica.headers);
             response.json({ data: result.data.results });
         }
         catch (err) {
+            console.log("err >> ", err.message);
             response.json({ err });
         }
     });

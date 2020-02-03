@@ -46,7 +46,6 @@ const ImgHolder = styled.div`
 `;
 
 const MemberCard = (props: Props) => {
-  console.log("props >> ", props);
   return (
     <StyledMemberCard>
       <Link href={`/member/${props.member.id}`}>

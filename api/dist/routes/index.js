@@ -22,7 +22,7 @@ class Routes {
         //     return response.send('invalid key');
         //   }
         // });
-        app.get('/api/members', members_1.getMembers);
+        app.get('/api/members/:chamber/:chamberNumber', members_1.getMembers);
         app.get('/api/member/:memberId', members_1.getMember);
         app.get('/api/member/:memberId/votes', members_1.getMemberVotes);
         app.get('/api/session/:session/:rollCall', sessions_1.getSession);
