@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { theme } from "./../../styles/theme";
+import { getPartyColor } from "../member-page/role-dashboard";
 
 interface props {
   state: string;
@@ -9,7 +10,7 @@ interface props {
 
 const StateChip = styled.div`
   background: ${theme.grey1};
-  color: ${p => (p.party === "R" ? theme.rep : theme.dem)};
+  color: ${(p: any) => getPartyColor(p.party)};
   font-weight: 900;
   padding: .5rem;
   position: absolute;

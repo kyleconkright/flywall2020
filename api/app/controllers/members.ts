@@ -52,8 +52,7 @@ export async function getCompareMembers(request: Request, response: Response) {
       propublica.compareMembers(member1, member2, congressNumber, chamber),
       propublica.headers
     );
-
-    response.json({ data: res.data.results });
+    response.json({ data: res.data.results[0] });
   } catch (err) {
     response.json({ err });
   }

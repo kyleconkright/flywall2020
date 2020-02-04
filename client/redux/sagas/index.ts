@@ -17,8 +17,8 @@ function* loadDataSaga(action?: {
   try {
     const res: any = yield axios.get(formatMemberUrl(chamber, chamberNumber));
     // // W000817 warren
-    // // S000033 sanders
-    // axios.get(formatMemberCompare("W000817", "S000033", "senate", 116));
+    // // A000360 alexander    /compare/W000817/A000360
+    // axios.get(formatMemberCompare("W000817", "A000360", "senate", 116));
 
     const members = res.data.data[0].members;
 
