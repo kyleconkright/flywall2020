@@ -31,6 +31,7 @@ class MemberIdPage extends Component<Props> {
   state = {
     congress: this.props.latestCongress
   };
+
   render() {
     const { member } = this.props;
     if (!member) {
@@ -51,9 +52,8 @@ class MemberIdPage extends Component<Props> {
         </Head>
         <div>
           <div>
-            Member Name: {member.first_name} {member.last_name} ({member.id})
+            ({party}) {member.first_name} {member.last_name}
             <div>rank: {latestInfo.state_rank}</div>
-            <div>party: {party}</div>
             <div>Last Congress: {latestInfo.congress}</div>
             <div>Next Election: {latestInfo.next_election}</div>
           </div>

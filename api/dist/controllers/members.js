@@ -58,7 +58,11 @@ function getCompareMembers(request, response) {
                 throw new Error("Missing a chamber or congress number");
             }
             const res = yield axios_1.default.get(propublica.compareMembers(member1, member2, congressNumber, chamber), propublica.headers);
+<<<<<<< HEAD
             response.json({ data: res.data.results });
+=======
+            response.json({ data: res.data.results[0] });
+>>>>>>> 36ed3fc9d2b7fdbd774ebab3ec218ab3f27e0958
         }
         catch (err) {
             response.json({ err });

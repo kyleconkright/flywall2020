@@ -2,6 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { theme } from "./../../styles/theme";
 import State from "./state";
+import { SyntheticEvent, useState } from "react";
 
 interface Props {
   member: {
@@ -44,13 +45,35 @@ const ImgHolder = styled.div`
   width: 100px;
   border-radius: 500px;
 `;
+const ImgStyled = styled.img`
+  background: ${theme.grey1};
+  height: 100px;
+  /* width: 100px; */
+  border-radius: 500px;
+`;
+function createImageLink(id: string): string {
+  const first = id.split("")[0];
+  return `http://bioguide.congress.gov/bioguide/photo/${first}/${id}.jpg`;
+}
 
 const MemberCard = (props: Props) => {
+  const [showError, setComponentError] = useState(false);
   return (
     <StyledMemberCard>
       <Link href={`/member/${props.member.id}`}>
         <Wrapper>
-          <ImgHolder />
+          {showError ? (
+            <ImgHolder />
+          ) : (
+            <ImgStyled
+              onError={(e: SyntheticEvent) => {
+                e.currentTarget.attributes.removeNamedItem("src");
+                e.currentTarget.setAttribute("display", "none");
+                setComponentError(true);
+              }}
+              src={createImageLink(props.member.id)}
+            />
+          )}
           <div>
             <p>
               {props.member.first_name} {props.member.last_name}
