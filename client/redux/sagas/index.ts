@@ -6,7 +6,8 @@ import {
   actionTypes,
   loadMembersSuccess,
   failure,
-  loadMembersClientSuccess
+  loadMembersClientSuccess,
+  compareSuccessData
 } from "../actions";
 
 function* loadDataSaga(action?: {
@@ -16,9 +17,6 @@ function* loadDataSaga(action?: {
 
   try {
     const res: any = yield axios.get(formatMemberUrl(chamber, chamberNumber));
-    // // W000817 warren
-    // // A000360 alexander    /compare/W000817/A000360
-    // axios.get(formatMemberCompare("W000817", "A000360", "senate", 116));
 
     const members = res.data.data[0].members;
 
@@ -42,11 +40,29 @@ function* loadMembersClientSaga(action?: {
     yield put(failure(err));
   }
 }
+function* compareMembersSaga(action?: { payload: any }) {
+  const { chamber, chamberNumber, member1, member2 } = action.payload;
+  // // W000817 warren
+  // // A000360 alexander    /compare/W000817/A000360
+
+  try {
+    const res: any = yield axios.get(
+      formatMemberCompare(member1, member2, chamber, chamberNumber)
+    );
+
+    const compareInfo = res.data.data;
+
+    yield put(compareSuccessData(compareInfo));
+  } catch (err) {
+    yield put(failure(err));
+  }
+}
 
 function* rootSaga() {
   yield all([
     takeLatest(actionTypes.LOAD_MEMBERS, loadDataSaga),
-    takeLatest(actionTypes.LOAD_MEMBERS_CLIENT, loadMembersClientSaga)
+    takeLatest(actionTypes.LOAD_MEMBERS_CLIENT, loadMembersClientSaga),
+    takeLatest(actionTypes.GET_COMPARE_DATA, compareMembersSaga)
   ]);
 }
 

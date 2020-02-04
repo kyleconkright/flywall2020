@@ -40,12 +40,28 @@ const Wrapper = styled.a`
     flex: 1;
     margin: 0 0 0 1rem;
   }
+  img {
+    &.hide {
+      background: ${theme.grey1};
+      width: 70px;
+      box-shadow: 0 0 5px #ccc;
+      border: 2px solid #f9f9f9;
+      object-position: top;
+      object-fit: cover;
+      height: 70px;
+      border-radius: 500px;
+    }
+  }
 `;
 
 const ImgHolder = styled.div`
   background: ${theme.grey1};
-  height: 70px;
   width: 70px;
+  box-shadow: 0 0 5px #ccc;
+  border: 2px solid #f9f9f9;
+  object-position: top;
+  object-fit: cover;
+  height: 70px;
   border-radius: 500px;
 `;
 
@@ -65,23 +81,19 @@ function createImageLink(id: string): string {
 }
 
 const MemberCard = (props: Props) => {
-  const [showError, setComponentError] = useState(false);
   return (
     <StyledMemberCard>
       <Link href={`/member/${props.member.id}`}>
         <Wrapper>
-          {showError ? (
-            <ImgHolder />
-          ) : (
-            <ImgStyled
-              onError={(e: SyntheticEvent) => {
-                e.currentTarget.attributes.removeNamedItem("src");
-                e.currentTarget.setAttribute("display", "none");
-                setComponentError(true);
-              }}
-              src={createImageLink(props.member.id)}
-            />
-          )}
+          <ImgStyled
+            onError={(e: SyntheticEvent) => {
+              e.currentTarget.classList.add("hide");
+              e.currentTarget.removeAttribute("src");
+            }}
+            src={createImageLink(props.member.id)}
+            alt={`${props.member.first_name} ${props.member.last_name}`}
+          />
+
           <div>
             <p>
               {props.member.first_name} {props.member.last_name}

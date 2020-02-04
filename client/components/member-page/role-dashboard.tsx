@@ -2,6 +2,7 @@ import React from "react";
 import { ResponsiveBar } from "@nivo/bar";
 import { ResponsivePie } from "@nivo/pie";
 import { theme } from "../../styles/theme";
+import { formatDate } from "../../pages/member/[mid]";
 
 interface Props {
   role: any;
@@ -44,7 +45,7 @@ votes_with_party_pct: 76.88
 votes_against_party_pct: 23.12
  */
 
-const chartSizes = { width: "500px", height: "500px" };
+const chartSizes = { height: "300px" };
 
 export function RoleDashboard(props: Props) {
   const { role } = props;
@@ -57,9 +58,9 @@ export function RoleDashboard(props: Props) {
     state_rank,
     start_date,
     end_date,
-    next_election,
     bills_sponsored,
-    bills_cosponsored
+    bills_cosponsored,
+  
   } = role;
   const pieColors = getPieColors(party);
   return (
@@ -67,12 +68,15 @@ export function RoleDashboard(props: Props) {
       <div>
         <div style={{ padding: "10px", margin: "10px" }}>{chamber} Info</div>
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr" }}>
           <div>Seniority: {seniority}</div>
+          <div>Party: {party}</div>
           <div>Class: {senate_class}</div>
           <div>Rank: {state_rank}</div>
-          <div>State Date: {new Date(start_date).toDateString()}</div>
-          <div>End Date: {new Date(end_date).toDateString()}</div>
+          <div>
+            State Date: {formatDate(start_date)} - End Date:
+            {formatDate(end_date)}
+          </div>
         </div>
       </div>
 
@@ -83,7 +87,7 @@ export function RoleDashboard(props: Props) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr"
+          gridTemplateColumns: "1fr 1fr 1fr 1fr"
         }}
       >
         <div style={chartSizes}>
@@ -244,7 +248,7 @@ export function RoleDashboard(props: Props) {
               },
               {
                 id: "Missed Votes %",
-                label: "Votes Against",
+                label: "Votes Missed",
                 value: role.missed_votes_pct
               }
             ]}

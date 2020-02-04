@@ -40,6 +40,16 @@ function reducer(state = defaultState, action) {
       return {
         ...state
       };
+    case actionTypes.GET_COMPARE_DATA:
+      return {
+        ...state,
+        ...action.payload
+      };
+    case actionTypes.COMPARE_DATA_SUCCESS:
+      return {
+        ...state,
+        compareInfo: action.payload
+      };
     case actionTypes.LOAD_MEMBERS_SUCCESS:
     case actionTypes.LOAD_MEMBERS_CLIENT_SUCCESS:
       return {
