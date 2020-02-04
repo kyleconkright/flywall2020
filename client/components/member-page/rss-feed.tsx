@@ -97,16 +97,47 @@ const PressReleaseItem = styled.a`
   align-items: center;
 `;
 
-function PressRelease({ title, pubDate, link, guid, author, thumbnail }) {
+function PressRelease({
+  title,
+  pubDate,
+  link,
+  guid,
+  author,
+  thumbnail,
+  categories
+}) {
   return (
-    <PressReleaseItem target="_blank" href={encodeURI(link)} key={guid}>
+    <PressReleaseItem key={guid}>
       {thumbnail ? <ImgStyled src={thumbnail} alt={title} /> : <ImgHolder />}
       <div className="title">
-        <div dangerouslySetInnerHTML={{ __html: title }}></div>
-        <div>
+        <a
+          target="_blank"
+          href={encodeURI(link)}
+          dangerouslySetInnerHTML={{ __html: title }}
+        ></a>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
           <small>
-            Published {author && `by ${author}`} on {formatDate(pubDate)}
+            <small>
+              <i>Published</i>
+            </small>
+            {author && `by ${author}`}{" "}
+            <small>
+              <i>on</i>
+            </small>{" "}
+            {formatDate(pubDate)}
           </small>
+          {categories.length ? (
+            <small>
+              Categories:
+              {categories.map(c => (
+                <small key={c}>
+                  <i>{c}</i>
+                </small>
+              ))}
+            </small>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </PressReleaseItem>

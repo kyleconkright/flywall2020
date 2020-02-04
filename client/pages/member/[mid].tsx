@@ -84,6 +84,23 @@ class MemberIdPage extends Component<Props> {
             )}
           </div>
           <hr></hr>
+          <div>
+            <div>Party Line Vote</div>
+            <Bar
+              height="300px"
+              colors={getPieColors(party)}
+              data={member.roles.reduce((acc, r) => {
+                if (!r.votes_against_party_pct) return acc;
+                acc.push({
+                  id: r.congress,
+                  votesAgainst: r.votes_against_party_pct,
+                  votesFor: r.votes_with_party_pct
+                });
+                return acc;
+              }, [])}
+              keys={["votesFor", "votesAgainst"]}
+            />
+          </div>
           <div
             style={{
               display: "grid",
@@ -103,20 +120,6 @@ class MemberIdPage extends Component<Props> {
             </select>
           </div>
           <RoleDashboard role={selectedRole} />
-          <Bar
-            height={"500px"}
-            colors={getPieColors(party)}
-            data={member.roles.reduce((acc, r) => {
-              if (!r.votes_against_party_pct) return acc;
-              acc.push({
-                id: r.congress,
-                votesAgainst: r.votes_against_party_pct,
-                votesFor: r.votes_with_party_pct
-              });
-              return acc;
-            }, [])}
-            keys={["votesFor", "votesAgainst"]}
-          />
           {member.rss_url && <MemberRssFeed url={member.rss_url} />}
         </div>
       </div>
