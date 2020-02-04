@@ -182,22 +182,21 @@ export function RoleDashboard(props: Props) {
 
         <div style={chartSizes}>
           <ResponsiveBar
-            colors={{ scheme: "purple_blue" }}
+            colors={[theme.teal, theme.orange1]}
             data={[
               {
-                category: "Total Votes",
-                totalVotes: role.total_votes,
-                totalVotesColor: "#333"
-              },
-              {
-                category: "Breakdown",
-                castVotes: role.total_votes - role.missed_votes,
-                castVotesColor: "#e2e",
-                missedVotes: role.missed_votes
+                id: "Votes",
+                "Cast Votes": role.total_votes - role.missed_votes,
+                "Missed Votes": role.missed_votes
               }
             ]}
-            keys={["totalVotes", "missedVotes", "castVotes"]}
-            indexBy="category"
+            tooltip={d => (
+              <div>
+                {d.id}: {d.value} of{" "}
+                {Number(d.data["Cast Votes"]) + Number(d.data["Missed Votes"])}
+              </div>
+            )}
+            keys={["Missed Votes", "Cast Votes"]}
             margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
             padding={0.3}
             legends={[
@@ -238,7 +237,7 @@ export function RoleDashboard(props: Props) {
             slicesLabelsTextColor="#fff"
             isInteractive
             animate
-            colors={["lime", "lightgrey"]}
+            colors={[theme.teal, theme.orange1]}
             data={[
               {
                 id: "Votes Cast %",

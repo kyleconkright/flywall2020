@@ -8,6 +8,7 @@ import {
   getPieColors
 } from "../../components/member-page/role-dashboard";
 import { ResponsiveBar } from "@nivo/bar";
+import { MemberRssFeed } from "../../components/member-page/rss-feed";
 interface Props {
   member?: any;
   latestCongress: number;
@@ -49,7 +50,7 @@ class MemberIdPage extends Component<Props> {
         <Head>
           <title>{`${member.first_name} ${member.middle_name || ""} ${
             member.last_name
-          } (${party})`}</title>
+          } (${party} - ${latestInfo.state})`}</title>
         </Head>
         <div>
           <div>
@@ -142,6 +143,7 @@ class MemberIdPage extends Component<Props> {
               ]}
             />
           </div>
+          {member.rss_url && <MemberRssFeed url={member.rss_url} />}
         </div>
       </div>
     );
