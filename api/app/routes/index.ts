@@ -34,7 +34,7 @@ export class Routes {
 
     app.get("/api/members/:chamber/:chamberNumber", getMembers);
     app.get(
-      "/api/members/:member1/:member2/:chamber/:congressNumber",
+      "/api/compare/:member1/:member2/:chamber/:congressNumber",
       getCompareMembers
     );
     app.get("/api/member/:memberId", getMember);

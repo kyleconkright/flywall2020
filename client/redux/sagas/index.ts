@@ -65,5 +65,5 @@ function formatMemberCompare(
   chamber: ChamberOptions,
   chamberNumber: number
 ) {
-  return `http://localhost:2020/api/members/${member1}/${member2}/${chamber}/${chamberNumber}`;
+  return `http://localhost:2020/api/compare/${member1}/${member2}/${chamber}/${chamberNumber}`;
 }
