@@ -6,9 +6,9 @@ const members_1 = require("../controllers/members");
 const sessions_1 = require("../controllers/sessions");
 class Routes {
     routes(app) {
-        app.route('/').get((req, res) => {
+        app.route("/").get((req, res) => {
             res.status(200).json({
-                message: 'express firebase success'
+                message: "express firebase success"
             });
         });
         // app.get('/api', (request: Request, response: Response) => {
@@ -22,10 +22,11 @@ class Routes {
         //     return response.send('invalid key');
         //   }
         // });
-        app.get('/api/members/:chamber/:chamberNumber', members_1.getMembers);
-        app.get('/api/member/:memberId', members_1.getMember);
-        app.get('/api/member/:memberId/votes', members_1.getMemberVotes);
-        app.get('/api/session/:session/:rollCall', sessions_1.getSession);
+        app.get("/api/members/:chamber/:chamberNumber", members_1.getMembers);
+        app.get("/api/members/:member1/:member2/:chamber/:congressNumber", members_1.getCompareMembers);
+        app.get("/api/member/:memberId", members_1.getMember);
+        app.get("/api/member/:memberId/votes", members_1.getMemberVotes);
+        app.get("/api/session/:session/:rollCall", sessions_1.getSession);
     }
 }
 exports.Routes = Routes;

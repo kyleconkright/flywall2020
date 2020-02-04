@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const LATEST_SENATE = "116";
 const LATEST_HOUSE = "116";
-// 102-116 for House, 80-116 for Senate
 function members(chamber, congressNumber) {
     switch (chamber) {
         case "house":
@@ -29,6 +28,10 @@ function session(session, rollCall) {
     return url;
 }
 exports.session = session;
+function compareMembers(member1, member2, congress, chamber) {
+    return `https://api.propublica.org/congress/v1/members/${member1}/votes/${member2}/${congress}/${chamber}.json`;
+}
+exports.compareMembers = compareMembers;
 exports.headers = {
     headers: { "X-API-Key": process.env.PROPUBLICA_KEY }
 };

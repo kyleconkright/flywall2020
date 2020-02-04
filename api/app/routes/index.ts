@@ -1,19 +1,24 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 
 // import { DatabaseClient } from '../database';
 
 // const firebase = new DatabaseClient();
 
-import { getMembers, getMember, getMemberVotes } from '../controllers/members';
-import { getSession } from '../controllers/sessions';
+import {
+  getMembers,
+  getMember,
+  getMemberVotes,
+  getCompareMembers
+} from "../controllers/members";
+import { getSession } from "../controllers/sessions";
 
 export class Routes {
   public routes(app: any): void {
-    app.route('/').get((req: Request, res: Response) => {
+    app.route("/").get((req: Request, res: Response) => {
       res.status(200).json({
-        message: 'express firebase success'
-      })
-    })
+        message: "express firebase success"
+      });
+    });
     // app.get('/api', (request: Request, response: Response) => {
     //   response.status(200).json({
     //     message: 'FlyWall API'
@@ -27,11 +32,14 @@ export class Routes {
     //   }
     // });
 
-    app.get('/api/members/:chamber/:chamberNumber', getMembers);
-    app.get('/api/member/:memberId', getMember);
-    app.get('/api/member/:memberId/votes', getMemberVotes);
+    app.get("/api/members/:chamber/:chamberNumber", getMembers);
+    app.get(
+      "/api/members/:member1/:member2/:chamber/:congressNumber",
+      getCompareMembers
+    );
+    app.get("/api/member/:memberId", getMember);
+    app.get("/api/member/:memberId/votes", getMemberVotes);
 
-    app.get('/api/session/:session/:rollCall', getSession);
-
+    app.get("/api/session/:session/:rollCall", getSession);
   }
 }

@@ -16,6 +16,9 @@ function* loadDataSaga(action?: {
 
   try {
     const res: any = yield axios.get(formatMemberUrl(chamber, chamberNumber));
+    // // W000817 warren
+    // // S000033 sanders
+    // axios.get(formatMemberCompare("W000817", "S000033", "senate", 116));
 
     const members = res.data.data[0].members;
 
@@ -55,4 +58,12 @@ export type ChamberNumber = number;
 
 function formatMemberUrl(chamber: ChamberOptions, chamberNumber: number) {
   return `http://localhost:2020/api/members/${chamber}/${chamberNumber}`;
+}
+function formatMemberCompare(
+  member1: string,
+  member2: string,
+  chamber: ChamberOptions,
+  chamberNumber: number
+) {
+  return `http://localhost:2020/api/members/${member1}/${member2}/${chamber}/${chamberNumber}`;
 }

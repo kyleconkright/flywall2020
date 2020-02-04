@@ -14,12 +14,10 @@ const propublica = require("../helpers/propublica");
 function getMembers(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log(request.params.chamber, request.params.chamberNumber);
             const result = yield axios_1.default.get(propublica.members(request.params.chamber, request.params.chamberNumber), propublica.headers);
             response.json({ data: result.data.results });
         }
         catch (err) {
-            console.log("err >> ", err.message);
             response.json({ err });
         }
     });
@@ -49,4 +47,25 @@ function getMemberVotes(request, response) {
     });
 }
 exports.getMemberVotes = getMemberVotes;
+function getCompareMembers(request, response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { member1, member2, chamber, congressNumber } = request.params;
+            if (!member1 || !member2) {
+                throw new Error("Missing Two members to compare");
+            }
+            if (!congressNumber || !chamber) {
+                throw new Error("Missing a chamber or congress number");
+            }
+            console.log(member1, member2, congressNumber, chamber);
+            const res = yield axios_1.default.get(propublica.compareMembers(member1, member2, congressNumber, chamber), propublica.headers);
+            console.log("compare >> ", res.data.results);
+            response.json({ data: res.data.results });
+        }
+        catch (err) {
+            response.json({ err });
+        }
+    });
+}
+exports.getCompareMembers = getCompareMembers;
 //# sourceMappingURL=members.js.map
