@@ -37,12 +37,6 @@ class Page extends Component<Props> {
     }
   }
 
-  componentDidMount() {
-    this.props.dispatch(
-      loadMembersClient(this.props.chamber, this.props.chamberNumber)
-    );
-  }
-
   render() {
     const members = this.props.members || [];
     return (

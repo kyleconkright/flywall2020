@@ -7,6 +7,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@nivo/bar": "^0.61.1",
+    "@nivo/pie": "^0.61.1",
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.19.2",
     "babel-plugin-styled-components": "^1.10.7",
