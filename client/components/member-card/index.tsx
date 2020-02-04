@@ -27,28 +27,36 @@ const StyledMemberCard = styled.li`
 const Wrapper = styled.a`
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-around;
-  text-align: center;
-  min-height: 200px;
+  min-height: 100px;
   padding: 1rem;
   cursor: pointer;
   span {
     font-size: ${theme.font1};
     color: ${theme.grey2};
   }
+  div {
+    flex: 1;
+    margin: 0 0 0 1rem;
+  }
 `;
 
 const ImgHolder = styled.div`
   background: ${theme.grey1};
-  height: 100px;
-  width: 100px;
+  height: 70px;
+  width: 70px;
   border-radius: 500px;
 `;
+
 const ImgStyled = styled.img`
   background: ${theme.grey1};
-  height: 100px;
-  /* width: 100px; */
+  width: 70px;
+  box-shadow: 0 0 5px #ccc;
+  border: 2px solid #f9f9f9;
+  object-position: top;
+  object-fit: cover;
+  height: 70px;
   border-radius: 500px;
 `;
 function createImageLink(id: string): string {
