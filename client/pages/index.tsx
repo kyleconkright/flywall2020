@@ -1,5 +1,3 @@
-import Link from "next/link";
-import Head from "next/head";
 import { Component } from "react";
 import { connect } from "react-redux";
 import {
@@ -15,6 +13,8 @@ import {
   SenateCongressOptions,
   HouseCongressOptions
 } from "../helpers/data/congresses";
+import Router from "next/router";
+import Head from "next/head";
 
 interface Props {
   members?: any;
@@ -32,7 +32,7 @@ const Container = styled.div``;
 
 const Controls = styled.div``;
 
-const Grid = styled.ul`
+export const Grid = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 1rem;
@@ -75,10 +75,33 @@ class MembersListPage extends Component<Props> {
     );
   };
 
+  state = {
+    compareMode: false,
+    member1: null,
+    member2: null
+  };
+
+  setCompareMembers = (id: string) => {
+    if (this.state.member1) {
+      this.setState({ member2: id }, () => {
+        Router.push(
+          `/compare/${this.state.member1}/${this.state.member2}/${this.props.chamber}/${this.props.chamberNumber}`
+        );
+      });
+    } else {
+      this.setState({ member1: id });
+    }
+  };
+
   render() {
     const members = this.props.members || [];
     return (
       <Container>
+        <Head>
+          <title>{`${this.props.chamber.toUpperCase()} - ${
+            this.props.chamberNumber
+          }`}</title>
+        </Head>
         <Controls>
           <form action="submit">
             <div>
@@ -106,10 +129,25 @@ class MembersListPage extends Component<Props> {
               )}
             </div>
           </form>
+          <button
+            onClick={() =>
+              this.setState({ compareMode: !this.state.compareMode })
+            }
+          >
+            Compare Mode {this.state.compareMode && "Engaged"}
+          </button>
         </Controls>
         <Grid>
           {members.map(member => {
-            return <MemberCard key={member.id} member={member} />;
+            return (
+              <MemberCard
+                selectedMembers={[this.state.member1, this.state.member2]}
+                setCompareMembers={this.setCompareMembers}
+                compareMode={this.state.compareMode}
+                key={member.id}
+                member={member}
+              />
+            );
           })}
         </Grid>
       </Container>

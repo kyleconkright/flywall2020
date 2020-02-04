@@ -59,8 +59,7 @@ export function RoleDashboard(props: Props) {
     start_date,
     end_date,
     bills_sponsored,
-    bills_cosponsored,
-  
+    bills_cosponsored
   } = role;
   const pieColors = getPieColors(party);
   return (
@@ -94,12 +93,9 @@ export function RoleDashboard(props: Props) {
           <ResponsiveBar
             data={[
               {
-                type: "Sponsored",
+                type: "Bill Activity",
                 sponsored: bills_sponsored,
-                sponsoredColor: "#333"
-              },
-              {
-                type: "Cosponsored",
+                sponsoredColor: "#333",
                 cosponsored: bills_cosponsored,
                 cosponsoredColor: "#e2e"
               }
@@ -108,7 +104,9 @@ export function RoleDashboard(props: Props) {
             indexBy="type"
             margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
             padding={0.3}
-            colors={{ scheme: "green_blue" }}
+            colors={["blue", "lightblue"]}
+            labelTextColor={"#eee"}
+            tooltip={d => <div>{`${d.id}: ${d.value}`}</div>}
             legends={[
               {
                 dataFrom: "keys",
@@ -238,8 +236,9 @@ export function RoleDashboard(props: Props) {
             borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
             slicesLabelsSkipAngle={30}
             slicesLabelsTextColor="#fff"
+            isInteractive
             animate
-            colors={["green", "grey"]}
+            colors={["lime", "lightgrey"]}
             data={[
               {
                 id: "Votes Cast %",

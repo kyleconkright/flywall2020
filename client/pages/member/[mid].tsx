@@ -7,8 +7,6 @@ import {
   getPartyColor,
   getPieColors
 } from "../../components/member-page/role-dashboard";
-import { ResponsiveLine } from "@nivo/line";
-import { theme } from "../../styles/theme";
 import { ResponsiveBar } from "@nivo/bar";
 interface Props {
   member?: any;

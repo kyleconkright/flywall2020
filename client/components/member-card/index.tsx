@@ -5,6 +5,9 @@ import State from "./state";
 import { SyntheticEvent, useState } from "react";
 
 interface Props {
+  compareMode?: boolean;
+  setCompareMembers?(id: string): void;
+  selectedMembers?: string[];
   member: {
     id: string;
     title: string;
@@ -19,7 +22,7 @@ interface Props {
 const StyledMemberCard = styled.li`
   box-shadow: 0 0 2px #eee;
   border-radius: 2px;
-  background: white;
+  background: ${p => (p.isSelected ? theme.grey1 : "white")};
   color: ${theme.grey5};
   position: relative;
 `;
@@ -81,6 +84,33 @@ function createImageLink(id: string): string {
 }
 
 const MemberCard = (props: Props) => {
+  if (props.compareMode) {
+    return (
+      <StyledMemberCard
+        isSelected={new Set(props.selectedMembers).has(props.member.id)}
+        onClick={() => props.setCompareMembers(props.member.id)}
+      >
+        <Wrapper>
+          <ImgStyled
+            onError={(e: SyntheticEvent) => {
+              e.currentTarget.classList.add("hide");
+              e.currentTarget.removeAttribute("src");
+            }}
+            src={createImageLink(props.member.id)}
+            alt={`${props.member.first_name} ${props.member.last_name}`}
+          />
+
+          <div>
+            <p>
+              {props.member.first_name} {props.member.last_name}
+            </p>
+            <span>{props.member.title}</span>
+          </div>
+          <State party={props.member.party} state={props.member.state}></State>
+        </Wrapper>
+      </StyledMemberCard>
+    );
+  }
   return (
     <StyledMemberCard>
       <Link href={`/member/${props.member.id}`}>
