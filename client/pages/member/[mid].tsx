@@ -9,6 +9,7 @@ import {
 } from "../../components/member-page/role-dashboard";
 import { ResponsiveBar } from "@nivo/bar";
 import { MemberRssFeed } from "../../components/member-page/rss-feed";
+import { Bar } from "../../components/charts/bar";
 interface Props {
   member?: any;
   latestCongress: number;
@@ -102,47 +103,20 @@ class MemberIdPage extends Component<Props> {
             </select>
           </div>
           <RoleDashboard role={selectedRole} />
-          <div style={{ height: "500px" }}>
-            <ResponsiveBar
-              colors={getPieColors(party)}
-              data={member.roles.reduce((acc, r) => {
-                if (!r.votes_against_party_pct) return acc;
-                acc.push({
-                  id: r.congress,
-                  votesAgainst: r.votes_against_party_pct,
-                  votesFor: r.votes_with_party_pct
-                });
-                return acc;
-              }, [])}
-              keys={["votesFor", "votesAgainst"]}
-              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-              padding={0.3}
-              legends={[
-                {
-                  dataFrom: "keys",
-                  anchor: "bottom-right",
-                  direction: "column",
-                  justify: false,
-                  translateX: 120,
-                  translateY: 0,
-                  itemsSpacing: 2,
-                  itemWidth: 100,
-                  itemHeight: 20,
-                  itemDirection: "left-to-right",
-                  itemOpacity: 0.85,
-                  symbolSize: 20,
-                  effects: [
-                    {
-                      on: "hover",
-                      style: {
-                        itemOpacity: 1
-                      }
-                    }
-                  ]
-                }
-              ]}
-            />
-          </div>
+          <Bar
+            height={"500px"}
+            colors={getPieColors(party)}
+            data={member.roles.reduce((acc, r) => {
+              if (!r.votes_against_party_pct) return acc;
+              acc.push({
+                id: r.congress,
+                votesAgainst: r.votes_against_party_pct,
+                votesFor: r.votes_with_party_pct
+              });
+              return acc;
+            }, [])}
+            keys={["votesFor", "votesAgainst"]}
+          />
           {member.rss_url && <MemberRssFeed url={member.rss_url} />}
         </div>
       </div>

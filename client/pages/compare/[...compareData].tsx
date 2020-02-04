@@ -7,6 +7,8 @@ import { ResponsiveBar } from "@nivo/bar";
 import Head from "next/head";
 import Router from "next/router";
 import { theme } from "../../styles/theme";
+import { Bar } from "../../components/charts/bar";
+import { Pie } from "../../components/charts/pie";
 
 const StyledComparedPage = styled.div`
   .info {
@@ -106,91 +108,36 @@ class ComparePage extends Component<any> {
           </div>
         </div>
         <div className="stats">
-          <div style={{ width: "400px", height: "400px" }}>
-            <ResponsivePie
-              margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-              innerRadius={0.5}
-              padAngle={3}
-              cornerRadius={5}
-              borderWidth={1}
-              borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
-              slicesLabelsSkipAngle={30}
-              slicesLabelsTextColor="#fff"
-              animate
-              colors={[theme.teal, theme.orange1]}
-              data={[
-                {
-                  id: "Agree %",
-                  label: "Agree %",
-                  value: agree_percent
-                },
-                {
-                  id: "Disagree %",
-                  label: "Disagree %",
-                  value: disagree_percent
-                }
-              ]}
-              legends={[
-                {
-                  anchor: "bottom",
-                  direction: "row",
-                  translateY: 56,
-                  itemWidth: 100,
-                  itemHeight: 18,
-                  itemTextColor: "#999",
-                  symbolSize: 18,
-                  symbolShape: "circle",
-                  effects: [
-                    {
-                      on: "hover",
-                      style: {
-                        itemTextColor: "#000"
-                      }
-                    }
-                  ]
-                }
-              ]}
-            />
-          </div>
-          <div style={{ width: "400px", height: "400px" }}>
-            <ResponsiveBar
-              colors={[theme.teal, theme.orange1]}
-              data={[
-                {
-                  id: "Votes",
-                  agreeVotes: common_votes - disagree_votes,
-                  disagreeVotes: disagree_votes
-                }
-              ]}
-              keys={["agreeVotes", "disagreeVotes"]}
-              margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-              padding={0.3}
-              legends={[
-                {
-                  dataFrom: "keys",
-                  anchor: "bottom-right",
-                  direction: "column",
-                  justify: false,
-                  translateX: 120,
-                  translateY: 0,
-                  itemsSpacing: 2,
-                  itemWidth: 100,
-                  itemHeight: 20,
-                  itemDirection: "left-to-right",
-                  itemOpacity: 0.85,
-                  symbolSize: 20,
-                  effects: [
-                    {
-                      on: "hover",
-                      style: {
-                        itemOpacity: 1
-                      }
-                    }
-                  ]
-                }
-              ]}
-            />
-          </div>
+          <Pie
+            width={"400px"}
+            height={"400px"}
+            colors={[theme.teal, theme.orange1]}
+            data={[
+              {
+                id: "Agree %",
+                label: "Agree %",
+                value: agree_percent
+              },
+              {
+                id: "Disagree %",
+                label: "Disagree %",
+                value: disagree_percent
+              }
+            ]}
+          />
+          <Bar
+            height={"400px"}
+            width={"400px"}
+            colors={[theme.teal, theme.orange1]}
+            data={[
+              {
+                id: "Votes",
+                agreeVotes: common_votes - disagree_votes,
+                disagreeVotes: disagree_votes
+              }
+            ]}
+            keys={["agreeVotes", "disagreeVotes"]}
+          />
         </div>
       </StyledComparedPage>
     );

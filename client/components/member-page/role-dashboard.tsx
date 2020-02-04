@@ -3,6 +3,8 @@ import { ResponsiveBar } from "@nivo/bar";
 import { ResponsivePie } from "@nivo/pie";
 import { theme } from "../../styles/theme";
 import { formatDate } from "../../pages/member/[mid]";
+import { Bar } from "../charts/bar";
+import { Pie } from "../charts/pie";
 
 interface Props {
   role: any;
@@ -89,189 +91,65 @@ export function RoleDashboard(props: Props) {
           gridTemplateColumns: "1fr 1fr 1fr 1fr"
         }}
       >
-        <div style={chartSizes}>
-          <ResponsiveBar
-            data={[
-              {
-                type: "Bill Activity",
-                sponsored: bills_sponsored,
-                sponsoredColor: "#333",
-                cosponsored: bills_cosponsored,
-                cosponsoredColor: "#e2e"
-              }
-            ]}
-            keys={["sponsored", "cosponsored"]}
-            indexBy="type"
-            margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-            padding={0.3}
-            colors={["blue", "lightblue"]}
-            labelTextColor={"#eee"}
-            tooltip={d => <div>{`${d.id}: ${d.value}`}</div>}
-            legends={[
-              {
-                dataFrom: "keys",
-                anchor: "bottom-right",
-                direction: "column",
-                justify: false,
-                translateX: 120,
-                translateY: 0,
-                itemsSpacing: 2,
-                itemWidth: 100,
-                itemHeight: 20,
-                itemDirection: "left-to-right",
-                itemOpacity: 0.85,
-                symbolSize: 20,
-                effects: [
-                  {
-                    on: "hover",
-                    style: {
-                      itemOpacity: 1
-                    }
-                  }
-                ]
-              }
-            ]}
-          />
-        </div>
-        <div style={chartSizes}>
-          <ResponsivePie
-            margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-            innerRadius={0.5}
-            padAngle={3}
-            cornerRadius={5}
-            borderWidth={1}
-            borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
-            slicesLabelsSkipAngle={30}
-            slicesLabelsTextColor="#fff"
-            animate
-            colors={pieColors}
-            data={[
-              {
-                id: "votes_for",
-                label: "Votes For",
-                value: role.votes_with_party_pct
-              },
-              {
-                id: "votes_against",
-                label: "Votes Against",
-                value: role.votes_against_party_pct
-              }
-            ]}
-            legends={[
-              {
-                anchor: "bottom",
-                direction: "row",
-                translateY: 56,
-                itemWidth: 100,
-                itemHeight: 18,
-                itemTextColor: "#999",
-                symbolSize: 18,
-                symbolShape: "circle",
-                effects: [
-                  {
-                    on: "hover",
-                    style: {
-                      itemTextColor: "#000"
-                    }
-                  }
-                ]
-              }
-            ]}
-          />
-        </div>
+        <Bar
+          {...chartSizes}
+          data={[
+            {
+              id: "Bill Activity",
+              sponsored: bills_sponsored,
+              sponsoredColor: "#333",
+              cosponsored: bills_cosponsored,
+              cosponsoredColor: "#e2e"
+            }
+          ]}
+          keys={["sponsored", "cosponsored"]}
+          colors={["blue", "lightblue"]}
+        />
+        <Pie
+          {...chartSizes}
+          colors={pieColors}
+          data={[
+            {
+              id: "votes_for",
+              label: "Votes For",
+              value: role.votes_with_party_pct
+            },
+            {
+              id: "votes_against",
+              label: "Votes Against",
+              value: role.votes_against_party_pct
+            }
+          ]}
+        />
 
-        <div style={chartSizes}>
-          <ResponsiveBar
-            colors={[theme.teal, theme.orange1]}
-            data={[
-              {
-                id: "Votes",
-                "Cast Votes": role.total_votes - role.missed_votes,
-                "Missed Votes": role.missed_votes
-              }
-            ]}
-            tooltip={d => (
-              <div>
-                {d.id}: {d.value} of{" "}
-                {Number(d.data["Cast Votes"]) + Number(d.data["Missed Votes"])}
-              </div>
-            )}
-            keys={["Missed Votes", "Cast Votes"]}
-            margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-            padding={0.3}
-            legends={[
-              {
-                dataFrom: "keys",
-                anchor: "bottom-right",
-                direction: "column",
-                justify: false,
-                translateX: 120,
-                translateY: 0,
-                itemsSpacing: 2,
-                itemWidth: 100,
-                itemHeight: 20,
-                itemDirection: "left-to-right",
-                itemOpacity: 0.85,
-                symbolSize: 20,
-                effects: [
-                  {
-                    on: "hover",
-                    style: {
-                      itemOpacity: 1
-                    }
-                  }
-                ]
-              }
-            ]}
-          />
-        </div>
-        <div style={chartSizes}>
-          <ResponsivePie
-            margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-            innerRadius={0.5}
-            padAngle={3}
-            cornerRadius={5}
-            borderWidth={1}
-            borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
-            slicesLabelsSkipAngle={30}
-            slicesLabelsTextColor="#fff"
-            isInteractive
-            animate
-            colors={[theme.teal, theme.orange1]}
-            data={[
-              {
-                id: "Votes Cast %",
-                label: "Votes Cast %",
-                value: 100 - role.missed_votes_pct
-              },
-              {
-                id: "Missed Votes %",
-                label: "Votes Missed",
-                value: role.missed_votes_pct
-              }
-            ]}
-            legends={[
-              {
-                anchor: "bottom",
-                direction: "row",
-                translateY: 56,
-                itemWidth: 100,
-                itemHeight: 18,
-                itemTextColor: "#999",
-                symbolSize: 18,
-                symbolShape: "circle",
-                effects: [
-                  {
-                    on: "hover",
-                    style: {
-                      itemTextColor: "#000"
-                    }
-                  }
-                ]
-              }
-            ]}
-          />
-        </div>
+        <Bar
+          {...chartSizes}
+          colors={[theme.teal, theme.orange1]}
+          data={[
+            {
+              id: "Votes",
+              "Cast Votes": role.total_votes - role.missed_votes,
+              "Missed Votes": role.missed_votes
+            }
+          ]}
+          keys={["Missed Votes", "Cast Votes"]}
+        />
+        <Pie
+          {...chartSizes}
+          colors={[theme.teal, theme.orange1]}
+          data={[
+            {
+              id: "Votes Cast %",
+              label: "Votes Cast %",
+              value: 100 - role.missed_votes_pct
+            },
+            {
+              id: "Missed Votes %",
+              label: "Votes Missed",
+              value: role.missed_votes_pct
+            }
+          ]}
+        />
       </div>
     </div>
   );
