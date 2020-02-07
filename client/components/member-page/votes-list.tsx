@@ -88,7 +88,6 @@ export class VoteCard extends Component<Props> {
     return (
       <VoteListContainer>
         {this.props.votes.map((vote, i) => {
-          console.log("vote >> ", vote);
           const color = getVoteColor(vote.result);
           return (
             <VoteContainer key={`${vote.bill.bill_id} ${i}`}>
