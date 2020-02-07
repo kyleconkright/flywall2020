@@ -104,6 +104,9 @@ export function RoleDashboard(props: Props) {
           ]}
           keys={["sponsored", "cosponsored"]}
           colors={["blue", "lightblue"]}
+          config={{
+            tooltip: d => `${d.id}: ${d.value}`
+          }}
         />
         <Pie
           {...chartSizes}
@@ -133,6 +136,9 @@ export function RoleDashboard(props: Props) {
             }
           ]}
           keys={["Missed Votes", "Cast Votes"]}
+          config={{
+            tooltip: d => `${d.id}: ${d.value}`
+          }}
         />
         <Pie
           {...chartSizes}
@@ -170,9 +176,11 @@ export function getPartyColor(party: string) {
 export function getPieColors(party: string) {
   switch (party) {
     case "R":
+    case "r":
       return [theme.rep, theme.dem];
 
     case "D":
+    case "d":
       return [theme.dem, theme.rep];
 
     default:

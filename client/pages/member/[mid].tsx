@@ -10,9 +10,37 @@ import {
 import { ResponsiveBar } from "@nivo/bar";
 import { MemberRssFeed } from "../../components/member-page/rss-feed";
 import { Bar } from "../../components/charts/bar";
+import { ChamberOptions, ChamberNumber } from "../../redux/sagas";
+import { VoteCard } from "../../components/member-page/votes-list";
 interface Props {
   member?: any;
   latestCongress: number;
+  votes: MemberVote[];
+}
+
+export interface MemberVote {
+  member_id: string;
+  chamber: ChamberOptions;
+  congress: ChamberNumber;
+  session: number;
+  roll_call: number;
+  vote_uri: string;
+  bill: {
+    bill_id: string;
+    number: string;
+    sponsor_id: string;
+    bill_uri: string;
+    title: string;
+    latest_action: string;
+  };
+  amendment: object;
+  description: string;
+  question: string;
+  result: string;
+  date: Date;
+  time: Date;
+  total: { yes: number; no: number; present: number; not_voting: number };
+  position: "Yes" | "No";
 }
 
 class MemberIdPage extends Component<Props> {
@@ -21,8 +49,12 @@ class MemberIdPage extends Component<Props> {
       const res: any = await axios.get(
         `http://localhost:2020/api/member/${ctx.query.mid}`
       );
+      const votesRes: any = await axios.get(
+        `http://localhost:2020/api/member/${ctx.query.mid}/votes`
+      );
       const member = res.data.data[0];
-      return { member, latestCongress: member.roles[0].congress };
+      const votes = votesRes.data.data[0].votes;
+      return { member, latestCongress: member.roles[0].congress, votes };
     } catch (error) {
       console.log("GET Member Error", error);
       return { member: null };
@@ -34,11 +66,10 @@ class MemberIdPage extends Component<Props> {
   };
 
   render() {
-    const { member } = this.props;
+    const { member, votes } = this.props;
     if (!member) {
       return <div>Working on it.</div>;
     }
-
     const latestInfo = member.roles[0];
     const { party } = latestInfo;
     const selectedRole = member.roles.find(
@@ -57,7 +88,7 @@ class MemberIdPage extends Component<Props> {
           <div>
             ({party} - {latestInfo.state}) {member.first_name}{" "}
             {member.middle_name || ""}
-            {member.last_name} ({latestInfo.state_rank})
+            {member.last_name}
             {member.is_active && (
               <div>Next Election: {latestInfo.next_election}</div>
             )}
@@ -93,12 +124,12 @@ class MemberIdPage extends Component<Props> {
                 if (!r.votes_against_party_pct) return acc;
                 acc.push({
                   id: r.congress,
-                  votesAgainst: r.votes_against_party_pct,
-                  votesFor: r.votes_with_party_pct
+                  "Voted Against Party": r.votes_against_party_pct,
+                  "Voted With Party": r.votes_with_party_pct
                 });
                 return acc;
               }, [])}
-              keys={["votesFor", "votesAgainst"]}
+              keys={["Voted With Party", "Voted Against Party"]}
             />
           </div>
           <div
@@ -120,6 +151,7 @@ class MemberIdPage extends Component<Props> {
             </select>
           </div>
           <RoleDashboard role={selectedRole} />
+          {votes.length ? <VoteCard votes={votes} /> : null}
           {member.rss_url && <MemberRssFeed url={member.rss_url} />}
         </div>
       </div>
