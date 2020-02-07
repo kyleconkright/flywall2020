@@ -1,7 +1,33 @@
 import React, { Component } from "react";
-import { MemberVote } from "../../pages/member/[mid]";
+
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
+import { ChamberOptions, ChamberNumber } from "../../redux/sagas";
+
+export interface MemberVote {
+  member_id: string;
+  chamber: ChamberOptions;
+  congress: ChamberNumber;
+  session: number;
+  roll_call: number;
+  vote_uri: string;
+  bill: {
+    bill_id: string;
+    number: string;
+    sponsor_id: string;
+    bill_uri: string;
+    title: string;
+    latest_action: string;
+  };
+  amendment: object;
+  description: string;
+  question: string;
+  result: string;
+  date: Date;
+  time: Date;
+  total: { yes: number; no: number; present: number; not_voting: number };
+  position: "Yes" | "No";
+}
 
 const VoteListContainer = styled.div`
   display: grid;
@@ -45,22 +71,34 @@ function renderVotePosition(position: "Yes" | "No" | null) {
   }
 }
 
+function getVoteColor(result) {
+  switch (result) {
+    case "Failed":
+      return theme.rep;
+    case "Passed":
+      return theme.green;
+
+    default:
+      return theme.orange1;
+  }
+}
+
 export class VoteCard extends Component<Props> {
   render() {
     return (
       <VoteListContainer>
-        {this.props.votes.map(vote => {
+        {this.props.votes.map((vote, i) => {
+          console.log("vote >> ", vote);
+          const color = getVoteColor(vote.result);
           return (
-            <VoteContainer key={vote.bill.bill_id}>
+            <VoteContainer key={`${vote.bill.bill_id} ${i}`}>
               <div className="bill-id">
                 <span>
-                  {vote.bill.number} | {vote.bill.bill_id}
+                  {vote.bill.number} | {vote.bill.bill_id}{" "}
+                  <small style={{ color }}>({vote.result})</small>
                 </span>
                 <span>
                   (
-                  <span className="vote">
-                    {renderVotePosition(vote.position)}
-                  </span>
                   <span>
                     {vote.chamber}-{vote.congress}-{vote.session}
                   </span>
@@ -68,19 +106,38 @@ export class VoteCard extends Component<Props> {
                 </span>
               </div>
               <hr />
-              <small className="description">{vote.description}</small>
+              <small className="vote">
+                <div>
+                  <small>Position</small>
+                </div>
+                {renderVotePosition(vote.position)}
+              </small>
+              <hr />
+              <small className="description">
+                <div>
+                  <small>Description</small>
+                </div>
+                {vote.description}
+              </small>
               <hr />
               {vote.bill.latest_action && (
                 <div>
                   <small>
-                    Latest Action:
+                    <div>
+                      <small>Last Action</small>
+                    </div>
+
                     <small>{vote.bill.latest_action}</small>
                   </small>
                   <hr />
                 </div>
               )}
               {/* <div className="title">{vote.bill.title}</div> */}
-              Total:
+              <div>
+                <small>
+                  <small>Total</small>
+                </small>
+              </div>
               <TotalValues className="final-votes">
                 <small>yes: {vote.total.yes}</small>
                 <small>no: {vote.total.no}</small>

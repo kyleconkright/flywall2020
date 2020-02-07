@@ -11,36 +11,11 @@ import { ResponsiveBar } from "@nivo/bar";
 import { MemberRssFeed } from "../../components/member-page/rss-feed";
 import { Bar } from "../../components/charts/bar";
 import { ChamberOptions, ChamberNumber } from "../../redux/sagas";
-import { VoteCard } from "../../components/member-page/votes-list";
+import { VoteCard, MemberVote } from "../../components/member-page/votes-list";
 interface Props {
   member?: any;
   latestCongress: number;
   votes: MemberVote[];
-}
-
-export interface MemberVote {
-  member_id: string;
-  chamber: ChamberOptions;
-  congress: ChamberNumber;
-  session: number;
-  roll_call: number;
-  vote_uri: string;
-  bill: {
-    bill_id: string;
-    number: string;
-    sponsor_id: string;
-    bill_uri: string;
-    title: string;
-    latest_action: string;
-  };
-  amendment: object;
-  description: string;
-  question: string;
-  result: string;
-  date: Date;
-  time: Date;
-  total: { yes: number; no: number; present: number; not_voting: number };
-  position: "Yes" | "No";
 }
 
 class MemberIdPage extends Component<Props> {

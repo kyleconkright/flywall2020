@@ -51,7 +51,7 @@ export class MemberRssFeed extends Component<
         Press Releases:
         <PressReleaseContainer>
           {this.state.articles.map(art => {
-            return <PressRelease {...art} />;
+            return <PressRelease key={generateComponentKey("feed")} {...art} />;
           })}
         </PressReleaseContainer>
       </div>
@@ -89,13 +89,18 @@ const ImgStyled = styled.img`
   border-radius: 500px;
 `;
 
-const PressReleaseItem = styled.a`
+const PressReleaseItem = styled.div`
   display: grid;
   grid-template-columns: 80px 1fr;
   grid-gap: 1rem;
   justify-content: center;
   align-items: center;
 `;
+
+let componentKeyIndex = 5;
+export function generateComponentKey(prefix = "component") {
+  return `${prefix}-${componentKeyIndex++}`;
+}
 
 function PressRelease({
   title,
@@ -107,7 +112,7 @@ function PressRelease({
   categories
 }) {
   return (
-    <PressReleaseItem key={guid}>
+    <PressReleaseItem key={`${generateComponentKey("rss")}}`}>
       {thumbnail ? <ImgStyled src={thumbnail} alt={title} /> : <ImgHolder />}
       <div className="title">
         <a
@@ -130,7 +135,7 @@ function PressRelease({
             <small>
               Categories:
               {categories.map(c => (
-                <small key={c}>
+                <small key={generateComponentKey("category")}>
                   <i>{c}</i>
                 </small>
               ))}
