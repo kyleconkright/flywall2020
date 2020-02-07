@@ -9,7 +9,9 @@ export const actionTypes = {
   LOAD_MEMBERS: "LOAD_MEMBERS",
   LOAD_MEMBERS_CLIENT: "LOAD_MEMBERS_CLIENT",
   LOAD_MEMBERS_CLIENT_SUCCESS: "LOAD_MEMBERS_CLIENT_SUCCESS",
-  LOAD_MEMBERS_SUCCESS: "LOAD_MEMBERS_SUCCESS"
+  LOAD_MEMBERS_SUCCESS: "LOAD_MEMBERS_SUCCESS",
+  LOAD_FULL_CONGRESS: "LOAD_FULL_CONGRESS",
+  LOAD_FULL_CONGRESS_SUCCESS: "LOAD_FULL_CONGRESS_SUCCESS"
 };
 
 export function failure(error) {
@@ -79,5 +81,21 @@ export function compareSuccessData(compareInfo: any) {
   return {
     type: actionTypes.COMPARE_DATA_SUCCESS,
     payload: { compareInfo }
+  };
+}
+
+export function loadFullCongressSuccess(fullCongress: {
+  house: any[];
+  senate: any[];
+}) {
+  return {
+    type: actionTypes.LOAD_FULL_CONGRESS_SUCCESS,
+    payload: { ...fullCongress }
+  };
+}
+export function loadFullCongress(congressNumber: number) {
+  return {
+    type: actionTypes.LOAD_FULL_CONGRESS,
+    payload: { congressNumber }
   };
 }

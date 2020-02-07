@@ -4,6 +4,7 @@ import { ChamberOptions, ChamberNumber } from "../sagas";
 
 interface initState {
   members: any[];
+  fullCongress: { house: any[]; senate: any[] };
   selectedMember: any;
   sagaTask: Task;
   chamber: ChamberOptions;
@@ -15,7 +16,8 @@ export const defaultState: initState = {
   selectedMember: null,
   sagaTask: null,
   chamber: "senate",
-  chamberNumber: 116
+  chamberNumber: 116,
+  fullCongress: null
 };
 
 function reducer(state = defaultState, action) {
@@ -49,6 +51,16 @@ function reducer(state = defaultState, action) {
       return {
         ...state,
         compareInfo: action.payload
+      };
+    case actionTypes.LOAD_FULL_CONGRESS:
+      return {
+        ...state,
+        congressNumber: action.payload
+      };
+    case actionTypes.LOAD_FULL_CONGRESS_SUCCESS:
+      return {
+        ...state,
+        fullCongress: action.payload
       };
     case actionTypes.LOAD_MEMBERS_SUCCESS:
     case actionTypes.LOAD_MEMBERS_CLIENT_SUCCESS:

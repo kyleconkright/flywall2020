@@ -1,6 +1,4 @@
 import React from "react";
-import { ResponsiveBar } from "@nivo/bar";
-import { ResponsivePie } from "@nivo/pie";
 import { theme } from "../../styles/theme";
 import { formatDate } from "../../pages/member/[mid]";
 import { Bar } from "../charts/bar";

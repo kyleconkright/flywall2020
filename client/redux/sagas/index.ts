@@ -7,7 +7,8 @@ import {
   loadMembersSuccess,
   failure,
   loadMembersClientSuccess,
-  compareSuccessData
+  compareSuccessData,
+  loadFullCongressSuccess
 } from "../actions";
 
 function* loadDataSaga(action?: {
@@ -25,6 +26,25 @@ function* loadDataSaga(action?: {
     yield put(failure(err));
   }
 }
+function* loadFullCongressSaga(action?: { payload: { congressNumber: any } }) {
+  const { congressNumber } = action.payload;
+
+  try {
+    const houseRes: any = yield axios.get(
+      formatMemberUrl("house", congressNumber)
+    );
+    const senateRes: any = yield axios.get(
+      formatMemberUrl("senate", congressNumber)
+    );
+    const house = houseRes.data.data[0].members;
+    const senate = senateRes.data.data[0].members;
+
+    yield put(loadFullCongressSuccess({ house, senate }));
+  } catch (err) {
+    yield put(failure(err));
+  }
+}
+
 function* loadMembersClientSaga(action?: {
   payload: { chamber: any; chamberNumber: any };
 }) {
@@ -62,7 +82,8 @@ function* rootSaga() {
   yield all([
     takeLatest(actionTypes.LOAD_MEMBERS, loadDataSaga),
     takeLatest(actionTypes.LOAD_MEMBERS_CLIENT, loadMembersClientSaga),
-    takeLatest(actionTypes.GET_COMPARE_DATA, compareMembersSaga)
+    takeLatest(actionTypes.GET_COMPARE_DATA, compareMembersSaga),
+    takeLatest(actionTypes.LOAD_FULL_CONGRESS, loadFullCongressSaga)
   ]);
 }
 
