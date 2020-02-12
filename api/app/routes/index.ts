@@ -11,7 +11,7 @@ import {
   getCompareMembers
 } from "../controllers/members";
 import { getSession } from "../controllers/sessions";
-import { searchBills } from "../controllers/bills";
+import { searchBills, singleBill } from "../controllers/bills";
 
 export class Routes {
   public routes(app: any): void {
@@ -72,5 +72,6 @@ export class Routes {
 
     // https://api.propublica.org/congress/v1/bills/search.json?query={query}
     app.post("/api/bills/search", searchBills);
+    app.post("/api/bills/single", singleBill);
   }
 }

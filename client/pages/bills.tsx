@@ -156,6 +156,7 @@ export interface Bill {
   sponsor_title: string;
   sponsor_id: string;
   sponsor_name: string;
+  sponsor?: string;
   sponsor_state: string;
   sponsor_party: string;
   sponsor_uri: string;

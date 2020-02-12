@@ -21,3 +21,21 @@ export async function searchBills(
     response.json({ err });
   }
 }
+
+
+export async function singleBill(request: Request, response: Response) {
+  try {
+    const {
+      body: { congress, billId }
+    } = request;
+
+    const result = await axios.get(
+      propublica.getSingleBill(billId, congress),
+      propublica.headers
+    );
+    response.json({ data: result.data.results });
+  } catch (err) {
+    response.json({ err });
+  }
+}
+

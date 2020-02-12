@@ -11,10 +11,15 @@ interface Props {
 class BillIdPage extends Component<Props> {
   static async getInitialProps({ ctx }) {
     try {
-      const { query } = ctx;
+      const { query, store } = ctx;
       const { bid } = query;
-      const res: any = await axios.get(
-        `http://localhost:2020/api/bills/${ctx.query.mid}`
+      const { congressNumber } = store.getState();
+      const res: any = await axios.post(
+        `http://localhost:2020/api/bills/single`,
+        {
+          billId: bid,
+          congress: "116"
+        }
       );
 
       const bill = res.data.data[0];
@@ -35,9 +40,39 @@ class BillIdPage extends Component<Props> {
     return (
       <div>
         <Head>
-          <title>{`BIll ID`}</title>
+          <title>{`BIll ${bill.number}`}</title>
         </Head>
-        <div>BILL ID</div>
+        <div>
+          <div className="header">
+            <div className="title">{bill.title}</div>
+            <div className="short-title">
+              <small>{bill.short_title}</small>
+            </div>
+            <div className="sponsors">
+              <div>Sponsor</div>
+              <div className="name">
+                {bill.sponsor_title} {bill.sponsor} - ({bill.sponsor_party}{" "}
+                - {bill.sponsor_state})
+              </div>
+            </div>
+            <div className="cosponsors">
+              <div>Cosponsors</div>
+              <div>{bill.cosponsors}</div>
+            </div>
+          </div>
+          <div className="info">
+            <div className="number">
+              <small>{bill.number}</small>
+            </div>
+          </div>
+          <div className="committees">
+            {bill.committees}
+            {bill.committee_codes.join(" - ")}
+          </div>
+          <div className="sub-committees">
+            {bill.subcommittee_codes.join(" - ")}
+          </div>
+        </div>
       </div>
     );
   }

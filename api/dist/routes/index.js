@@ -41,6 +41,7 @@ class Routes {
         /////////////////////////////////////////////////////
         // https://api.propublica.org/congress/v1/bills/search.json?query={query}
         app.post("/api/bills/search", bills_1.searchBills);
+        app.post("/api/bills/single", bills_1.singleBill);
     }
 }
 exports.Routes = Routes;

@@ -36,6 +36,10 @@ function createSearchBills(query = "") {
     return `https://api.propublica.org/congress/v1/bills/search.json?query=${query}`;
 }
 exports.createSearchBills = createSearchBills;
+function getSingleBill(billId, congress) {
+    return `https://api.propublica.org/congress/v1/${congress}/bills/${billId}.json`;
+}
+exports.getSingleBill = getSingleBill;
 exports.headers = {
     headers: { "X-API-Key": process.env.PROPUBLICA_KEY }
 };
