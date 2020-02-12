@@ -3,11 +3,11 @@ import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
 import { Store } from "redux";
 import App from "next/app";
-
 import createStore from "../redux/store";
 
 import "./../styles/stylesheet.scss";
 import Header from "../components/header";
+import SideNav from "../components/side-nav";
 
 const layoutStyle = {
   display: "grid"
@@ -23,13 +23,17 @@ class FlywallApp extends App<{ store: Store }> {
 
     return { pageProps };
   }
+
   render() {
     const { Component, pageProps = {}, store } = this.props;
     return (
       <Provider store={store}>
         <main style={layoutStyle}>
           <Header />
-          <Component {...pageProps} />
+          <div style={{ display: "grid", gridTemplateColumns: "200px 1fr" }}>
+            <SideNav />
+            <Component {...pageProps} />
+          </div>
         </main>
       </Provider>
     );

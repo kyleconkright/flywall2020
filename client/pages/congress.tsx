@@ -56,6 +56,9 @@ class CongressBreakDown extends Component<Props> {
 
   render() {
     const { fullCongress } = this.props;
+    if (!fullCongress) {
+      return <div>Loading...</div>;
+    }
     const { house, senate } = fullCongress;
     const { senateCount } = senate.reduce(
       (acc, m) => {
