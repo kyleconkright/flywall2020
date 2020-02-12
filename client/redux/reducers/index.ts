@@ -1,6 +1,7 @@
 import { actionTypes } from "../actions/index";
 import { Task } from "redux-saga";
 import { ChamberOptions, ChamberNumber } from "../sagas";
+import { Bill } from "../../pages/bills";
 
 interface initState {
   members: any[];
@@ -9,6 +10,8 @@ interface initState {
   sagaTask: Task;
   chamber: ChamberOptions;
   chamberNumber: ChamberNumber;
+  billSearchQuery: string;
+  bills: Bill[];
 }
 
 export const defaultState: initState = {
@@ -17,7 +20,9 @@ export const defaultState: initState = {
   sagaTask: null,
   chamber: "senate",
   chamberNumber: 116,
-  fullCongress: null
+  fullCongress: null,
+  billSearchQuery: "",
+  bills: []
 };
 
 function reducer(state = defaultState, action) {
@@ -31,6 +36,18 @@ function reducer(state = defaultState, action) {
       return {
         ...state,
         ...{ chamber: action.payload.chamber }
+      };
+    case actionTypes.SEARCH_BILLS_QUERY_UPDATE:
+      return {
+        ...state,
+        billSearchQuery: action.payload.query
+      };
+    case actionTypes.SEARCH_BILLS_SUCCESS:
+      console.log("payload ", action.payload);
+      return {
+        ...state,
+        bills: action.payload.bills,
+        billSearchQuery: action.payload.query
       };
     case actionTypes.UPDATE_CHAMBER_NUMBER:
       return {

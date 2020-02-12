@@ -8,7 +8,8 @@ import {
   failure,
   loadMembersClientSuccess,
   compareSuccessData,
-  loadFullCongressSuccess
+  loadFullCongressSuccess,
+  searchBillsSuccess
 } from "../actions";
 
 function* loadDataSaga(action?: {
@@ -77,13 +78,32 @@ function* compareMembersSaga(action?: { payload: any }) {
     yield put(failure(err));
   }
 }
+function* searchBillsSaga(action?: { payload: { query: string } }) {
+  const { query } = action.payload;
+
+  try {
+    const res: any = yield axios.post(
+      `http://localhost:2020/api/bills/search`,
+      {
+        query
+      }
+    );
+
+    const bills = res.data.data[0].bills;
+    console.log("bills.uqery"), bills, query;
+    yield put(searchBillsSuccess(bills, query));
+  } catch (err) {
+    yield put(failure(err));
+  }
+}
 
 function* rootSaga() {
   yield all([
     takeLatest(actionTypes.LOAD_MEMBERS, loadDataSaga),
     takeLatest(actionTypes.LOAD_MEMBERS_CLIENT, loadMembersClientSaga),
     takeLatest(actionTypes.GET_COMPARE_DATA, compareMembersSaga),
-    takeLatest(actionTypes.LOAD_FULL_CONGRESS, loadFullCongressSaga)
+    takeLatest(actionTypes.LOAD_FULL_CONGRESS, loadFullCongressSaga),
+    takeLatest(actionTypes.SEARCH_BILLS, searchBillsSaga)
   ]);
 }
 

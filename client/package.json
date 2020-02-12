@@ -16,6 +16,7 @@
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.19.2",
     "babel-plugin-styled-components": "^1.10.7",
+    "lodash": "^4.17.15",
     "next": "^9.2.1",
     "next-redux-saga": "^4.1.2",
     "next-redux-wrapper": "^4.0.1",
@@ -29,6 +30,7 @@
     "styled-components": "^5.0.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.149",
     "@types/next-redux-saga": "^3.0.2",
     "@types/next-redux-wrapper": "^3.0.0",
     "@types/node": "^13.5.0",
