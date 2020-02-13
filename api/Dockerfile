@@ -9,4 +9,6 @@ RUN npm install -q --no-color --no-progress
 
 COPY ./ /app/
 
-CMD ["npx", "ts-node", "server.ts"]
+RUN npm run build
+
+CMD ["npm", "run", "dev"]
