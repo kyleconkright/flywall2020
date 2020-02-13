@@ -101,9 +101,7 @@ const MemberCard = (props: Props) => {
           />
 
           <div>
-            <p>
-              {props.member.first_name} {props.member.last_name}
-            </p>
+            <p>{props.member.first_name} {props.member.last_name}</p>
             <span>{props.member.title}</span>
           </div>
           <State party={props.member.party} state={props.member.state}></State>
