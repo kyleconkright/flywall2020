@@ -22,10 +22,10 @@ class MemberIdPage extends Component<Props> {
   static async getInitialProps({ ctx }) {
     try {
       const res: any = await axios.get(
-        `http://localhost:2020/api/member/${ctx.query.mid}`
+        `${process.env.API_URL}/member/${ctx.query.mid}`
       );
       const votesRes: any = await axios.get(
-        `http://localhost:2020/api/member/${ctx.query.mid}/votes`
+        `${process.env.API_URL}/member/${ctx.query.mid}/votes`
       );
       const member = res.data.data[0];
       const votes = votesRes.data.data[0].votes;
