@@ -73,7 +73,7 @@ export type ChamberOptions = "house" | "senate" | "both";
 export type ChamberNumber = number;
 
 function formatMemberUrl(chamber: ChamberOptions, chamberNumber: number) {
-  return `http://localhost:2020/api/members/${chamber}/${chamberNumber}`;
+  return `${process.env.API_URL}/members/${chamber}/${chamberNumber}`;
 }
 function formatMemberCompare(
   member1: string,
@@ -81,5 +81,5 @@ function formatMemberCompare(
   chamber: ChamberOptions,
   chamberNumber: number
 ) {
-  return `http://localhost:2020/api/compare/${member1}/${member2}/${chamber}/${chamberNumber}`;
+  return `${process.env.API_URL}/compare/${member1}/${member2}/${chamber}/${chamberNumber}`;
 }
