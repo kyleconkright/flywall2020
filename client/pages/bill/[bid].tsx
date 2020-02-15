@@ -6,6 +6,7 @@ import { Bill } from "../bills";
 
 interface Props {
   bill?: Bill;
+  error?: string;
 }
 
 class BillIdPage extends Component<Props> {
@@ -13,28 +14,31 @@ class BillIdPage extends Component<Props> {
     try {
       const { query, store } = ctx;
       const { bid } = query;
-      const { congressNumber } = store.getState();
+      const { chamberNumber } = store.getState();
+
       const res: any = await axios.post(
         `http://localhost:2020/api/bills/single`,
         {
           billId: bid,
-          congress: "116"
+          congress: chamberNumber
         }
       );
+
+    
 
       const bill = res.data.data[0];
 
       return { bill, billId: bid };
     } catch (error) {
       console.log("GET Single Bill Error", error);
-      return { bill: null };
+      return { error: error.message, bill: null };
     }
   }
 
   render() {
-    const { bill } = this.props;
-    if (!bill) {
-      return <div>Working on it.</div>;
+    const { bill, error } = this.props;
+    if (error && !bill) {
+      return <div>{error}</div>;
     }
 
     return (
@@ -51,8 +55,8 @@ class BillIdPage extends Component<Props> {
             <div className="sponsors">
               <div>Sponsor</div>
               <div className="name">
-                {bill.sponsor_title} {bill.sponsor} - ({bill.sponsor_party}{" "}
-                - {bill.sponsor_state})
+                {bill.sponsor_title} {bill.sponsor} - ({bill.sponsor_party} -{" "}
+                {bill.sponsor_state})
               </div>
             </div>
             <div className="cosponsors">

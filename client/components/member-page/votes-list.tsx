@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { theme } from "../../styles/theme";
 import { ChamberOptions, ChamberNumber } from "../../redux/sagas";
+import Link from "next/link";
 
 export interface MemberVote {
   member_id: string;
@@ -93,7 +94,17 @@ export class VoteCard extends Component<Props> {
             <VoteContainer key={`${vote.bill.bill_id} ${i}`}>
               <div className="bill-id">
                 <span>
-                  {vote.bill.number} | {vote.bill.bill_id}{" "}
+                  {vote.bill.bill_id ? (
+                    <Link href={`/bill/${vote.bill.bill_id.split("-")[0]}`}>
+                      <a>
+                        {vote.bill.number} | {vote.bill.bill_id}{" "}
+                      </a>
+                    </Link>
+                  ) : (
+                    <span>
+                      {vote.bill.number} | {vote.bill.bill_id}{" "}
+                    </span>
+                  )}
                   <small style={{ color }}>({vote.result})</small>
                 </span>
                 <span>

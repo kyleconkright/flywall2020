@@ -16,12 +16,12 @@ export async function searchBills(
       propublica.createSearchBills(query),
       propublica.headers
     );
+
     response.json({ data: result.data.results });
   } catch (err) {
     response.json({ err });
   }
 }
-
 
 export async function singleBill(request: Request, response: Response) {
   try {
@@ -33,9 +33,15 @@ export async function singleBill(request: Request, response: Response) {
       propublica.getSingleBill(billId, congress),
       propublica.headers
     );
+    if (result.data.status === "ERROR") {
+      response.json({
+        err: Array.isArray(response.data.errors)
+          ? response.data.errors.map(e => e.message).join(" - ")
+          : response.data.errors
+      });
+    }
     response.json({ data: result.data.results });
   } catch (err) {
     response.json({ err });
   }
 }
-
