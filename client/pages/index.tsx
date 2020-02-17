@@ -9,10 +9,7 @@ import styled from "styled-components";
 import MemberCard from "../components/member-card";
 import { ChamberOptions, ChamberNumber } from "../redux/sagas";
 import { Dispatch, bindActionCreators } from "redux";
-import {
-  SenateCongressOptions,
-  HouseCongressOptions
-} from "../helpers/data/congresses";
+
 import Router from "next/router";
 import Head from "next/head";
 
@@ -30,13 +27,12 @@ interface Props {
 
 const Container = styled.div``;
 
-const Controls = styled.div``;
-
 export const Grid = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 1rem;
   padding: 1rem;
+  margin: 57px 0 0;
 `;
 
 class MembersListPage extends Component<Props> {
@@ -54,26 +50,7 @@ class MembersListPage extends Component<Props> {
     }
   }
 
-  renderOptions = options => {
-    return (
-      <select
-        onChange={e => {
-          const value: ChamberNumber = Number(e.currentTarget.value);
-          this.props.updateChamberNumber(value);
-          this.props.loadMembers(this.props.chamber, value);
-        }}
-        value={this.props.chamberNumber}
-      >
-        {options.map(v => {
-          return (
-            <option key={v} value={v}>
-              {v}
-            </option>
-          );
-        })}
-      </select>
-    );
-  };
+
 
   state = {
     compareMode: false,
@@ -102,41 +79,6 @@ class MembersListPage extends Component<Props> {
             this.props.chamberNumber
           }`}</title>
         </Head>
-        <Controls>
-          <form action="submit">
-            <div>
-              <select
-                onChange={e => {
-                  this.props.updateChamber(
-                    e.currentTarget.value as ChamberOptions
-                  );
-                  this.props.loadMembers(
-                    e.currentTarget.value as ChamberOptions,
-                    this.props.chamberNumber
-                  );
-                }}
-                value={this.props.chamber}
-              >
-                <option value="senate">Senate</option>
-                <option value="house">House</option>
-              </select>
-            </div>
-            <div>
-              {this.renderOptions(
-                this.props.chamber === "house"
-                  ? HouseCongressOptions
-                  : SenateCongressOptions
-              )}
-            </div>
-          </form>
-          <button
-            onClick={() =>
-              this.setState({ compareMode: !this.state.compareMode })
-            }
-          >
-            Compare Mode {this.state.compareMode && "Engaged"}
-          </button>
-        </Controls>
         <Grid>
           {members.map(member => {
             return (

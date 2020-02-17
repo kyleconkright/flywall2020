@@ -42,8 +42,6 @@ function* loadMembersClientSaga(action?: {
 }
 function* compareMembersSaga(action?: { payload: any }) {
   const { chamber, chamberNumber, member1, member2 } = action.payload;
-  // // W000817 warren
-  // // A000360 alexander    /compare/W000817/A000360
 
   try {
     const res: any = yield axios.get(

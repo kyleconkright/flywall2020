@@ -3,7 +3,7 @@ import { Task } from "redux-saga";
 import { ChamberOptions, ChamberNumber } from "../sagas";
 
 interface initState {
-  members: any[];
+  members: any;
   selectedMember: any;
   sagaTask: Task;
   chamber: ChamberOptions;
