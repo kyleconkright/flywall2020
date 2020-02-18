@@ -6,12 +6,17 @@ import { theme } from "../styles/theme";
 interface Props {}
 
 const SideNav: React.FC<Props> = () => {
-  const router = useRouter();
   return (
     <StyleNav>
-      <Link href="/bills">Bills</Link>
-      <Link href="/members">Members</Link>
-      <Link href="/congress">Congress</Link>
+      <Link href="/bills">
+        <a>Bills</a>
+      </Link>
+      <Link href="/members">
+        <a>Members</a>
+      </Link>
+      <Link href="/congress">
+        <a>Congress</a>
+      </Link>
     </StyleNav>
   );
 };

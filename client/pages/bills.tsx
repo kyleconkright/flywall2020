@@ -82,7 +82,9 @@ class BillsComponent extends Component<Props> {
                   }}
                 >
                   <div>
-                    <Link href={`/bill/${bill.bill_slug}`}>{bill.number}</Link>
+                    <Link href={`/bill/${bill.bill_slug}`}>
+                      <a>{bill.number}</a>
+                    </Link>
                     {bill.active ? "😎" : "💀"}
                   </div>
                   <span style={{ fontSize: ".8rem" }}>
@@ -140,10 +142,7 @@ function mapDispatchToProps() {
     );
 }
 
-export default connect(state => {
-  console.log("state >>", state);
-  return state;
-}, mapDispatchToProps)(BillsComponent);
+export default connect(state => state, mapDispatchToProps)(BillsComponent);
 
 export interface Bill {
   bill_id: string;

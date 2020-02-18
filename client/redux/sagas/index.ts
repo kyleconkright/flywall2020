@@ -90,7 +90,7 @@ function* searchBillsSaga(action?: { payload: { query: string } }) {
     );
 
     const bills = res.data.data[0].bills;
-    console.log("bills.uqery"), bills, query;
+    // console.log("bills.uqery", bills, query);
     yield put(searchBillsSuccess(bills, query));
   } catch (err) {
     yield put(failure(err));
