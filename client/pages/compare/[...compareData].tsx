@@ -29,13 +29,13 @@ class ComparePage extends Component<any> {
     try {
       const [member1, member2, chamber, chamberNumber] = ctx.query.compareData;
       const res: any = await axios.get(
-        `http://localhost:2020/api/compare/${member1}/${member2}/${chamber}/${chamberNumber}`
+        `${process.env.API_URL}/compare/${member1}/${member2}/${chamber}/${chamberNumber}`
       );
       const member1Res: any = await axios.get(
-        `http://localhost:2020/api/member/${member1}/`
+        `${process.env.API_URL}/member/${member1}/`
       );
       const member2Res: any = await axios.get(
-        `http://localhost:2020/api/member/${member2}`
+        `${process.env.API_URL}/member/${member2}`
       );
 
       return {

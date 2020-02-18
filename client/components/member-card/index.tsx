@@ -39,9 +39,9 @@ const Wrapper = styled.a`
     font-size: ${theme.font1};
     color: ${theme.grey2};
   }
-  div {
+  div.name-title {
     flex: 1;
-    margin: 0 0 0 1rem;
+    margin: 0 2rem 0 1rem;
   }
   img {
     &.hide {
@@ -101,9 +101,7 @@ const MemberCard = (props: Props) => {
           />
 
           <div>
-            <p>
-              {props.member.first_name} {props.member.last_name}
-            </p>
+            <p>{props.member.first_name} {props.member.last_name}</p> 
             <span>{props.member.title}</span>
           </div>
           <State party={props.member.party} state={props.member.state}></State>
@@ -124,7 +122,7 @@ const MemberCard = (props: Props) => {
             alt={`${props.member.first_name} ${props.member.last_name}`}
           />
 
-          <div>
+          <div className="name-title">
             <p>
               {props.member.first_name} {props.member.last_name}
             </p>

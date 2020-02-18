@@ -4,8 +4,8 @@ import { ChamberOptions, ChamberNumber } from "../sagas";
 import { Bill } from "../../pages/bills";
 
 interface initState {
-  members: any[];
   fullCongress: { house: any[]; senate: any[] };
+  members: any;
   selectedMember: any;
   sagaTask: Task;
   chamber: ChamberOptions;

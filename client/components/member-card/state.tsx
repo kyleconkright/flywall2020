@@ -13,6 +13,7 @@ const StateChip = styled.div`
   color: ${(p: any) => getPartyColor(p.party)};
   font-weight: 900;
   padding: .5rem;
+  margin: 0;
   position: absolute;
   top: .5rem;
   right: .5rem;

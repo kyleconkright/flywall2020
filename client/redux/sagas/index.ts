@@ -63,8 +63,6 @@ function* loadMembersClientSaga(action?: {
 }
 function* compareMembersSaga(action?: { payload: any }) {
   const { chamber, chamberNumber, member1, member2 } = action.payload;
-  // // W000817 warren
-  // // A000360 alexander    /compare/W000817/A000360
 
   try {
     const res: any = yield axios.get(
@@ -114,7 +112,7 @@ export type ChamberOptions = "house" | "senate" | "both";
 export type ChamberNumber = number;
 
 function formatMemberUrl(chamber: ChamberOptions, chamberNumber: number) {
-  return `http://localhost:2020/api/members/${chamber}/${chamberNumber}`;
+  return `${process.env.API_URL}/members/${chamber}/${chamberNumber}`;
 }
 function formatMemberCompare(
   member1: string,
@@ -122,5 +120,5 @@ function formatMemberCompare(
   chamber: ChamberOptions,
   chamberNumber: number
 ) {
-  return `http://localhost:2020/api/compare/${member1}/${member2}/${chamber}/${chamberNumber}`;
+  return `${process.env.API_URL}/compare/${member1}/${member2}/${chamber}/${chamberNumber}`;
 }
