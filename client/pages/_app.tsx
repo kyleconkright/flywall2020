@@ -30,7 +30,13 @@ class FlywallApp extends App<{ store: Store }> {
       <Provider store={store}>
         <main style={layoutStyle}>
           <Header />
-          <div style={{ display: "grid", gridTemplateColumns: "200px 1fr" }}>
+          <div
+            style={{
+              marginTop: "60px",
+              display: "grid",
+              gridTemplateColumns: "200px 1fr"
+            }}
+          >
             <SideNav />
             <Component {...pageProps} />
           </div>
