@@ -43,7 +43,6 @@ function reducer(state = defaultState, action) {
         billSearchQuery: action.payload.query
       };
     case actionTypes.SEARCH_BILLS_SUCCESS:
-      console.log("payload ", action.payload);
       return {
         ...state,
         bills: action.payload.bills,
