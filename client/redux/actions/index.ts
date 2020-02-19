@@ -6,10 +6,8 @@ export const actionTypes = {
   COMPARE_DATA_SUCCESS: "COMPARE_DATA_SUCCESS",
   UPDATE_CHAMBER: "UPDATE_CHAMBER",
   UPDATE_CHAMBER_NUMBER: "UPDATE_CHAMBER_NUMBER",
-  LOAD_MEMBERS: "LOAD_MEMBERS",
-  LOAD_MEMBERS_CLIENT: "LOAD_MEMBERS_CLIENT",
-  LOAD_MEMBERS_CLIENT_SUCCESS: "LOAD_MEMBERS_CLIENT_SUCCESS",
-  LOAD_MEMBERS_SUCCESS: "LOAD_MEMBERS_SUCCESS"
+  LOAD_MEMBERS: "[MEMBERS] Load Members",
+  LOAD_MEMBERS_SUCCESS: "[MEMBERS] Load Members Success"
 };
 
 export function failure(error) {
@@ -30,25 +28,8 @@ export function loadMembers(
   };
 }
 
-export function loadMembersSuccess(members: any[]) {
-  return { type: actionTypes.LOAD_MEMBERS_SUCCESS, payload: { members } };
-}
-
-export function loadMembersClient(
-  chamber: ChamberOptions,
-  chamberNumber: ChamberNumber
-) {
-  return {
-    type: actionTypes.LOAD_MEMBERS_CLIENT,
-    payload: { chamber, chamberNumber }
-  };
-}
-
-export function loadMembersClientSuccess(members: any[] = []) {
-  return {
-    type: actionTypes.LOAD_MEMBERS_CLIENT_SUCCESS,
-    payload: { members }
-  };
+export function loadMembersSuccess(members: any[], chamber) {
+  return { type: actionTypes.LOAD_MEMBERS_SUCCESS, payload: { members, chamber } };
 }
 
 export function updateChamber(chamber: ChamberOptions) {

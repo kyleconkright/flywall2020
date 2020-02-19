@@ -1,13 +1,13 @@
 /* global fetch */
 
-import { all, call, delay, put, take, takeLatest } from "redux-saga/effects";
+import { all, put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import {
   actionTypes,
   loadMembersSuccess,
   failure,
-  loadMembersClientSuccess,
-  compareSuccessData
+  compareSuccessData,
+  updateChamber
 } from "../actions";
 
 function* loadDataSaga(action?: {
@@ -20,26 +20,13 @@ function* loadDataSaga(action?: {
 
     const members = res.data.data[0].members;
 
-    yield put(loadMembersSuccess(members));
+    yield put(loadMembersSuccess(members, chamber));
+    yield put(updateChamber(chamber));
   } catch (err) {
     yield put(failure(err));
   }
 }
-function* loadMembersClientSaga(action?: {
-  payload: { chamber: any; chamberNumber: any };
-}) {
-  const { chamber, chamberNumber } = action.payload;
 
-  try {
-    const res: any = yield axios.get(formatMemberUrl(chamber, chamberNumber));
-
-    const members = res.data.data[0].members;
-
-    yield put(loadMembersClientSuccess(members));
-  } catch (err) {
-    yield put(failure(err));
-  }
-}
 function* compareMembersSaga(action?: { payload: any }) {
   const { chamber, chamberNumber, member1, member2 } = action.payload;
 
@@ -59,7 +46,6 @@ function* compareMembersSaga(action?: { payload: any }) {
 function* rootSaga() {
   yield all([
     takeLatest(actionTypes.LOAD_MEMBERS, loadDataSaga),
-    takeLatest(actionTypes.LOAD_MEMBERS_CLIENT, loadMembersClientSaga),
     takeLatest(actionTypes.GET_COMPARE_DATA, compareMembersSaga)
   ]);
 }

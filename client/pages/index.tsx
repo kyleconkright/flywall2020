@@ -9,6 +9,7 @@ import styled from "styled-components";
 import MemberCard from "../components/member-card";
 import { ChamberOptions, ChamberNumber } from "../redux/sagas";
 import { Dispatch, bindActionCreators } from "redux";
+import { selectMembers } from "../redux/selectors/members";
 
 import Router from "next/router";
 import Head from "next/head";
@@ -38,11 +39,10 @@ export const Grid = styled.ul`
 class MembersListPage extends Component<Props> {
   static async getInitialProps(props) {
     const { isServer, store } = props.ctx;
-    const { chamber, chamberNumber } = store.getState();
+    const { members, menu } = store.getState();
 
     try {
-      store.dispatch(loadMembers(chamber, chamberNumber));
-
+      store.dispatch(loadMembers('senate', menu.congress));
       return { isServer, store };
     } catch (error) {
       console.error(error);
@@ -71,16 +71,17 @@ class MembersListPage extends Component<Props> {
   };
 
   render() {
-    const members = this.props.members || [];
+    const members = Object.values(this.props.members.senate);
+
     return (
       <Container>
         <Head>
-          <title>{`${this.props.chamber.toUpperCase()} - ${
+          <title>Flywall - {` ${
             this.props.chamberNumber
           }`}</title>
         </Head>
         <Grid>
-          {members.map(member => {
+          {members.map((member: any) => {
             return (
               <MemberCard
                 selectedMembers={[this.state.member1, this.state.member2]}
@@ -92,7 +93,7 @@ class MembersListPage extends Component<Props> {
             );
           })}
         </Grid>
-      </Container>
+      </Container>  
     );
   }
 }
@@ -104,6 +105,12 @@ function mapDispatchToProps() {
       dispatch
     );
 }
+
+// const mapStateToProps = (state) => {
+//   return {
+//     members: selectMembers(state),
+//   }
+// }
 
 export default connect(state => {
   return state;

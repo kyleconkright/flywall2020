@@ -15,17 +15,11 @@ const Search = (props) => {
   return (
     <ul className="inline-list">
       <li className="mr-h">
-        <Button action={() => props.handleSelect('senate')} text="Senate" />
+        <Button active={props.menu.senate} action={() => props.handleSelect('senate')} text="Senate" />
       </li>
       <li>
-        <Button action={() => props.handleSelect('house')} text="House" />
+        <Button active={props.menu.house} action={() => props.handleSelect('house')} text="House" />
       </li>
-      {/* <form action="submit">
-          <select onChange={e => props.handleSelect(e.target.value)}>
-            <option value="senate">Senate</option>
-            <option value="house">House</option>
-          </select>
-      </form> */}
     </ul>
   )
 }
@@ -35,6 +29,7 @@ const Search = (props) => {
 const mapStateToProps = (state) => {
   return {
     members: state.members,
+    menu: state.menu
   }
 }
 
