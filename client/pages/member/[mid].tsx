@@ -7,10 +7,8 @@ import {
   getPartyColor,
   getPieColors
 } from "../../components/member-page/role-dashboard";
-import { ResponsiveBar } from "@nivo/bar";
 import { MemberRssFeed } from "../../components/member-page/rss-feed";
 import { Bar } from "../../components/charts/bar";
-import { ChamberOptions, ChamberNumber } from "../../redux/sagas";
 import { VoteCard, MemberVote } from "../../components/member-page/votes-list";
 interface Props {
   member?: any;
@@ -53,13 +51,12 @@ class MemberIdPage extends Component<Props> {
 
     return (
       <div>
-        <hr></hr>
         <Head>
           <title>{`${member.first_name} ${member.middle_name || ""} ${
             member.last_name
           } (${party} - ${latestInfo.state})`}</title>
         </Head>
-        <div>
+        <div style={{ marginTop: "70px", display: "grid" }}>
           <div>
             ({party} - {latestInfo.state}) {member.first_name}{" "}
             {member.middle_name || ""}
@@ -91,9 +88,8 @@ class MemberIdPage extends Component<Props> {
           </div>
           <hr></hr>
           <div>
-            <div>Party Line Vote</div>
+            <div>Vote History</div>
             <Bar
-              height="300px"
               colors={getPieColors(party)}
               data={member.roles.reduce((acc, r) => {
                 if (!r.votes_against_party_pct) return acc;
