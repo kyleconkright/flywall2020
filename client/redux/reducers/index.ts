@@ -19,7 +19,7 @@ export const defaultState: initState = {
   selectedMember: null,
   sagaTask: null,
   chamber: "senate",
-  chamberNumber: 116,
+  chamberNumber: 117,
   fullCongress: null,
   billSearchQuery: "",
   bills: []

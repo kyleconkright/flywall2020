@@ -33,17 +33,17 @@ class CongressBreakDown extends Component<Props> {
     }
   }
 
-  renderOptions = options => {
+  renderOptions = (options) => {
     return (
       <select
-        onChange={e => {
+        onChange={(e) => {
           const value: ChamberNumber = Number(e.currentTarget.value);
           this.props.updateChamberNumber(value);
           this.props.loadFullCongress(value);
         }}
         value={this.props.chamberNumber}
       >
-        {options.map(v => {
+        {options.map((v) => {
           return (
             <option key={v} value={v}>
               {v}
@@ -75,7 +75,7 @@ class CongressBreakDown extends Component<Props> {
         }
       },
       {
-        senateCount: { rep: 0, dem: 0, ind: 0 }
+        senateCount: { rep: 0, dem: 0, ind: 0 },
       }
     );
     const { houseCount } = house.reduce(
@@ -93,7 +93,7 @@ class CongressBreakDown extends Component<Props> {
         }
       },
       {
-        houseCount: { rep: 0, dem: 0, ind: 0 }
+        houseCount: { rep: 0, dem: 0, ind: 0 },
       }
     );
 
@@ -111,7 +111,7 @@ class CongressBreakDown extends Component<Props> {
             const item = {
               id: `${member.first_name} ${member.last_name}`,
               color: getPartyColor(member.party),
-              partyColor: getPartyColor(member.party)
+              partyColor: getPartyColor(member.party),
             };
 
             if (secondAcc.has(member.state)) {
@@ -129,19 +129,19 @@ class CongressBreakDown extends Component<Props> {
           return {
             id: k,
             color: "yellow",
-            children: Array.from(c).map(b => {
+            children: Array.from(c).map((b) => {
               return {
                 ...b,
-                value: c.size
+                value: c.size,
               };
-            })
+            }),
           };
         });
 
         const highLevel = {
           id: k,
           color: theme.grey,
-          children
+          children,
         };
         acc[k] = highLevel;
         return acc;
@@ -183,15 +183,15 @@ class CongressBreakDown extends Component<Props> {
               data={[
                 { id: "democrats", label: "Dem", value: senateCount.dem },
                 { id: "republicans", label: "Rep", value: senateCount.rep },
-                { id: "independent", label: "Ind", value: senateCount.ind }
+                { id: "independent", label: "Ind", value: senateCount.ind },
               ]}
               colors={[theme.dem, theme.rep, theme.ind]}
               config={{
                 rows: 10,
                 columns: 10,
-                tooltip: d => {
+                tooltip: (d) => {
                   return <div>{`${d.label} - ${d.value} `}</div>;
-                }
+                },
               }}
             />
             <Sunburst
@@ -199,9 +199,9 @@ class CongressBreakDown extends Component<Props> {
               colors={[theme.dem, theme.rep, theme.ind]}
               data={houseBurst.senate}
               config={{
-                tooltip: d => {
+                tooltip: (d) => {
                   return <div>{`${d.label} - ${d.value} `}</div>;
-                }
+                },
               }}
             />
           </div>
@@ -214,13 +214,13 @@ class CongressBreakDown extends Component<Props> {
               data={[
                 { id: "democrats", label: "Dem", value: houseCount.dem },
                 { id: "republicans", label: "Rep", value: houseCount.rep },
-                { id: "independent", label: "Ind", value: houseCount.ind }
+                { id: "independent", label: "Ind", value: houseCount.ind },
               ]}
               colors={[theme.dem, theme.rep, theme.ind]}
               config={{
                 rows: houseSize,
                 columns: houseSize,
-                tooltip: d => `${d.label} - ${d.value} `
+                tooltip: (d) => `${d.label} - ${d.value} `,
               }}
             />
             <Sunburst
@@ -236,8 +236,8 @@ class CongressBreakDown extends Component<Props> {
 }
 
 function mapDispatchToProps() {
-  return dispatch =>
+  return (dispatch) =>
     bindActionCreators({ loadFullCongress, updateChamberNumber }, dispatch);
 }
 
-export default connect(state => state, mapDispatchToProps)(CongressBreakDown);
+export default connect((state) => state, mapDispatchToProps)(CongressBreakDown);
