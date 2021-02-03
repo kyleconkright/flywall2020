@@ -25,12 +25,16 @@ export default SideNav;
 
 const StyleNav = styled.div`
   display: grid;
-  height: 100vh;
-  grid-template-rows: repeat(auto-fill, minmax(25px, 1fr));
+  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   grid-row-gap: 1px;
-
+  width: 100%;
   a {
     background: ${theme.grey1};
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover {
       background: white;
     }

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   loadMembers,
   updateChamber,
-  updateChamberNumber
+  updateChamberNumber,
 } from "../redux/actions";
 import styled from "styled-components";
 import MemberCard from "../components/member-card";
@@ -11,7 +11,7 @@ import { ChamberOptions, ChamberNumber } from "../redux/sagas";
 import { Dispatch, bindActionCreators } from "redux";
 import {
   SenateCongressOptions,
-  HouseCongressOptions
+  HouseCongressOptions,
 } from "../helpers/data/congresses";
 import Router from "next/router";
 import Head from "next/head";
@@ -54,17 +54,17 @@ class MembersListPage extends Component<Props> {
     }
   }
 
-  renderOptions = options => {
+  renderOptions = (options) => {
     return (
       <select
-        onChange={e => {
+        onChange={(e) => {
           const value: ChamberNumber = Number(e.currentTarget.value);
           this.props.updateChamberNumber(value);
           this.props.loadMembers(this.props.chamber, value);
         }}
         value={this.props.chamberNumber}
       >
-        {options.map(v => {
+        {options.map((v) => {
           return (
             <option key={v} value={v}>
               {v}
@@ -78,7 +78,7 @@ class MembersListPage extends Component<Props> {
   state = {
     compareMode: false,
     member1: null,
-    member2: null
+    member2: null,
   };
 
   setCompareMembers = (id: string) => {
@@ -94,6 +94,7 @@ class MembersListPage extends Component<Props> {
   };
 
   render() {
+    console.log("this.props", this.props);
     const members = this.props.members || [];
     return (
       <Container>
@@ -106,7 +107,7 @@ class MembersListPage extends Component<Props> {
           <form action="submit">
             <div>
               <select
-                onChange={e => {
+                onChange={(e) => {
                   this.props.updateChamber(
                     e.currentTarget.value as ChamberOptions
                   );
@@ -138,7 +139,7 @@ class MembersListPage extends Component<Props> {
           </button>
         </Controls>
         <Grid>
-          {members.map(member => {
+          {members.map((member) => {
             return (
               <MemberCard
                 selectedMembers={[this.state.member1, this.state.member2]}
@@ -156,13 +157,13 @@ class MembersListPage extends Component<Props> {
 }
 
 function mapDispatchToProps() {
-  return dispatch =>
+  return (dispatch) =>
     bindActionCreators(
       { updateChamber, loadMembers, updateChamberNumber },
       dispatch
     );
 }
 
-export default connect(state => {
+export default connect((state) => {
   return state;
 }, mapDispatchToProps)(MembersListPage);

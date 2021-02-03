@@ -10,7 +10,7 @@ import Header from "../components/header";
 import SideNav from "../components/side-nav";
 
 const layoutStyle = {
-  display: "grid"
+  display: "grid",
 };
 
 class FlywallApp extends App<{ store: Store }> {
@@ -34,11 +34,14 @@ class FlywallApp extends App<{ store: Store }> {
             style={{
               marginTop: "60px",
               display: "grid",
-              gridTemplateColumns: "200px 1fr"
+              gridTemplateRows: "50px 1fr",
+              gridGap: "3px",
             }}
           >
             <SideNav />
-            <Component {...pageProps} />
+            <div style={{ padding: "10px" }}>
+              <Component {...pageProps} />
+            </div>
           </div>
         </main>
       </Provider>
