@@ -9,6 +9,7 @@ import Router from "next/router";
 import { theme } from "../../styles/theme";
 import { Bar } from "../../components/charts/bar";
 import { Pie } from "../../components/charts/pie";
+import Link from "next/link";
 
 const StyledComparedPage = styled.div`
   .info {
@@ -41,7 +42,7 @@ class ComparePage extends Component<any> {
       return {
         compareData: res.data.data,
         member1: member1Res.data.data[0],
-        member2: member2Res.data.data[0]
+        member2: member2Res.data.data[0],
       };
     } catch (error) {
       console.log("GET Member Error", error);
@@ -54,7 +55,7 @@ class ComparePage extends Component<any> {
         <div>
           Sorry for the inconvenience something has come up.
           <button
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
               Router.back();
             }}
@@ -74,9 +75,9 @@ class ComparePage extends Component<any> {
       common_votes,
       disagree_votes,
       agree_percent,
-      disagree_percent
+      disagree_percent,
     } = compareData;
-
+    console.log(" > ", this.props);
     // first_member_id
     // first_member_api_uri
     // second_member_id
@@ -95,16 +96,35 @@ class ComparePage extends Component<any> {
         </Head>
         <div className="members">
           <div>
-            {lastRole1.short_title} {member1.last_name}
+            <Link href={`/member/${member1.id}`}>
+              <a>
+                {lastRole1.short_title} {member1.last_name}
+              </a>
+            </Link>
           </div>
           <div>
             <div>In the {congress} Congress</div>
-            <div>Agree {agree_percent}</div>
-            <div>Disagree {disagree_percent}</div>
+            <div>Agree {agree_percent}%</div>
+            <div>Disagree {disagree_percent}%</div>
+
+            <div
+              style={{
+                borderTop: "1px solid ",
+                width: "fit-content",
+                paddingTop: "5px",
+                marginTop: "5px",
+              }}
+            >
+              Out of {common_votes} votes
+            </div>
           </div>
 
           <div>
-            {lastRole2.short_title} {member2.last_name}
+            <Link href={`/member/${member2.id}`}>
+              <a>
+                {lastRole2.short_title} {member2.last_name}
+              </a>
+            </Link>
           </div>
         </div>
         <div className="stats">
@@ -116,13 +136,13 @@ class ComparePage extends Component<any> {
               {
                 id: "Agree %",
                 label: "Agree %",
-                value: agree_percent
+                value: agree_percent,
               },
               {
                 id: "Disagree %",
                 label: "Disagree %",
-                value: disagree_percent
-              }
+                value: disagree_percent,
+              },
             ]}
           />
           <Bar
@@ -133,8 +153,8 @@ class ComparePage extends Component<any> {
               {
                 id: "Votes",
                 agreeVotes: common_votes - disagree_votes,
-                disagreeVotes: disagree_votes
-              }
+                disagreeVotes: disagree_votes,
+              },
             ]}
             keys={["agreeVotes", "disagreeVotes"]}
           />
@@ -144,4 +164,4 @@ class ComparePage extends Component<any> {
   }
 }
 
-export default connect(state => state)(ComparePage);
+export default connect((state) => state)(ComparePage);

@@ -1,8 +1,10 @@
+import React from "react";
 import Head from "next/head";
 import axios from "axios";
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Bill } from "../bills";
+import Link from "next/link";
 
 interface Props {
   bill?: Bill;
@@ -20,11 +22,9 @@ class BillIdPage extends Component<Props> {
         `http://localhost:2020/api/bills/single`,
         {
           billId: bid,
-          congress: chamberNumber
+          congress: chamberNumber,
         }
       );
-
-    
 
       const bill = res.data.data[0];
 
@@ -40,6 +40,7 @@ class BillIdPage extends Component<Props> {
     if (error && !bill) {
       return <div>{error}</div>;
     }
+    console.log(bill);
 
     return (
       <div>
@@ -55,8 +56,12 @@ class BillIdPage extends Component<Props> {
             <div className="sponsors">
               <div>Sponsor</div>
               <div className="name">
-                {bill.sponsor_title} {bill.sponsor} - ({bill.sponsor_party} -{" "}
-                {bill.sponsor_state})
+                <Link href={`/member/${bill.sponsor_id}`}>
+                  <a>
+                    {bill.sponsor_title} {bill.sponsor} - ({bill.sponsor_party}{" "}
+                    - {bill.sponsor_state})
+                  </a>
+                </Link>
               </div>
             </div>
             <div className="cosponsors">
@@ -76,10 +81,23 @@ class BillIdPage extends Component<Props> {
           <div className="sub-committees">
             {bill.subcommittee_codes.join(" - ")}
           </div>
+          <div style={{ marginTop: "5px" }} className="actions">
+            <p>Actions</p>
+            <ul>
+              {bill.actions.map((action, i) => {
+                return (
+                  <li style={{ margin: "5px" }} key={i}>
+                    <small>{action.action_type}</small>
+                    <p>{action.description}</p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default connect(state => state)(BillIdPage);
+export default connect((state) => state)(BillIdPage);

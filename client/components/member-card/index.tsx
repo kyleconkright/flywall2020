@@ -22,7 +22,7 @@ interface Props {
 const StyledMemberCard = styled.li`
   box-shadow: 0 0 2px #eee;
   border-radius: 2px;
-  background: ${p => (p.isSelected ? theme.grey1 : "white")};
+  background: ${(p) => (p.isSelected ? theme.grey1 : "white")};
   color: ${theme.grey5};
   position: relative;
 `;
@@ -86,11 +86,15 @@ function createImageLink(id: string): string {
 const MemberCard = (props: Props) => {
   if (props.compareMode) {
     return (
-      <StyledMemberCard
-        isSelected={new Set(props.selectedMembers).has(props.member.id)}
-        onClick={() => props.setCompareMembers(props.member.id)}
-      >
+      <StyledMemberCard>
         <Wrapper>
+          <div>
+            <input
+              type="checkbox"
+              onClick={() => props.setCompareMembers(props.member.id)}
+              checked={new Set(props.selectedMembers).has(props.member.id)}
+            />
+          </div>
           <ImgStyled
             onError={(e: SyntheticEvent) => {
               e.currentTarget.classList.add("hide");
@@ -101,7 +105,9 @@ const MemberCard = (props: Props) => {
           />
 
           <div>
-            <p>{props.member.first_name} {props.member.last_name}</p> 
+            <p>
+              {props.member.first_name} {props.member.last_name}
+            </p>
             <span>{props.member.title}</span>
           </div>
           <State party={props.member.party} state={props.member.state}></State>

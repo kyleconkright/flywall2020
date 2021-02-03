@@ -41,6 +41,7 @@ class BillsComponent extends Component<Props> {
   debounceSearchBills = debounce(this.searchBills, 1001);
 
   render() {
+    console.log(this.props.bills);
     return (
       <div>
         <Head>
@@ -63,10 +64,10 @@ class BillsComponent extends Component<Props> {
             display: "grid",
             gridTemplateColumns: `repeat(auto-fill, minmax(400px, 1fr))`,
             gridGap: "8px",
-            margin: "10px"
+            margin: "10px",
           }}
         >
-          {this.props.bills.map(bill => {
+          {this.props.bills.map((bill) => {
             return (
               <div
                 key={bill.number}
@@ -78,7 +79,7 @@ class BillsComponent extends Component<Props> {
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr",
                     background: theme.grey,
-                    padding: "10px"
+                    padding: "10px",
                   }}
                 >
                   <div>
@@ -101,8 +102,12 @@ class BillsComponent extends Component<Props> {
                 <div>
                   <small style={{ margin: "3px" }}>SPONSOR</small>
                   <span style={{ fontSize: ".9em" }}>
-                    {bill.sponsor_name} ({bill.sponsor_party} -{" "}
-                    {bill.sponsor_state})
+                    <Link href={`/member/${bill.sponsor_id}`}>
+                      <a>
+                        {bill.sponsor_name} ({bill.sponsor_party} -{" "}
+                        {bill.sponsor_state})
+                      </a>
+                    </Link>
                   </span>
                 </div>
                 <div>
@@ -136,13 +141,13 @@ function mapDispatchToProps() {
     bindActionCreators(
       {
         searchBills,
-        updateSearchBillQuery
+        updateSearchBillQuery,
       },
       dispatch
     );
 }
 
-export default connect(state => state, mapDispatchToProps)(BillsComponent);
+export default connect((state) => state, mapDispatchToProps)(BillsComponent);
 
 export interface Bill {
   bill_id: string;
@@ -179,6 +184,7 @@ export interface Bill {
   summary_short: string;
   latest_major_action_date: Date;
   latest_major_action: string;
+  actions?: any[];
 }
 
 type PartyChoices = "D" | "R";

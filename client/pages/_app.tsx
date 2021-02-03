@@ -34,7 +34,7 @@ class FlywallApp extends App<{ store: Store }> {
             style={{
               marginTop: "60px",
               display: "grid",
-              gridTemplateRows: "50px 1fr",
+              gridTemplateRows: "30px 1fr",
               gridGap: "3px",
             }}
           >
