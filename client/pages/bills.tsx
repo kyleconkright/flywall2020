@@ -8,6 +8,7 @@ import debounce from "lodash/debounce";
 import { searchBills, updateSearchBillQuery } from "../redux/actions";
 import { bindActionCreators, Dispatch } from "redux";
 import Link from "next/link";
+import { TabTitle } from "../components/head/head";
 interface Props {
   bills: Bill[];
   initBills: Bill[];
@@ -44,9 +45,7 @@ class BillsComponent extends Component<Props> {
     console.log(this.props.bills);
     return (
       <div>
-        <Head>
-          <title>Bills</title>
-        </Head>
+        <TabTitle title="Bills" />
         <div style={{ padding: "4px" }}>
           <div>
             <div>Bill Search</div>
