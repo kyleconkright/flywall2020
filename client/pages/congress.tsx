@@ -9,6 +9,7 @@ import { theme } from "../styles/theme";
 import { Sunburst } from "../components/charts/sunburst";
 import { HouseCongressOptions } from "../helpers/data/congresses";
 import { Network } from "../components/charts/network";
+import { TabTitle } from "../components/head/head";
 
 interface Props {
   fullCongress: { house: any[]; senate: any[] };
@@ -172,6 +173,7 @@ class CongressBreakDown extends Component<Props> {
     const houseSize = Math.ceil(Math.sqrt(house.length));
     return (
       <div>
+        <TabTitle title="Congress" />
         <div>{this.renderOptions(HouseCongressOptions)} Congress</div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
           <div>
