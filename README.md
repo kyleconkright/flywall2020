@@ -7,10 +7,12 @@
 
 ## TODO:
 
+- [ ] UI Clean up / Make it look avg after KH just threw things all over it.
+- [ ] Add modal when referencing outside current focus?
 - [ ] CI/CD
 - [ ] Get money data from kirkish(Hurst's Brothers friend)
-- [ ] UI Clean up / Make it look great after KH just threw things all over it.
 - [ ] State map
 - [ ] CRON jobs for data
 - [ ] State/Local Data?
 - [ ] Marketing / Profit
+- [ ] Add Twitter Profile Pages

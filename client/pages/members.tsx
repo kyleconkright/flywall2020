@@ -15,6 +15,7 @@ import {
 } from "../helpers/data/congresses";
 import Router from "next/router";
 import Head from "next/head";
+import { TabTitle } from "../components/head/head";
 
 interface Props {
   members?: any;
@@ -98,11 +99,11 @@ class MembersListPage extends Component<Props> {
     const members = this.props.members || [];
     return (
       <Container>
-        <Head>
-          <title>{`${this.props.chamber.toUpperCase()} - ${
+        <TabTitle
+          title={`${this.props.chamber.toUpperCase()} - ${
             this.props.chamberNumber
-          }`}</title>
-        </Head>
+          }`}
+        />
         <Controls>
           <form action="submit">
             <div>

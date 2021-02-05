@@ -10,6 +10,7 @@ import { theme } from "../../styles/theme";
 import { Bar } from "../../components/charts/bar";
 import { Pie } from "../../components/charts/pie";
 import Link from "next/link";
+import { TabTitle } from "../../components/head/head";
 
 const StyledComparedPage = styled.div`
   .info {
@@ -91,9 +92,7 @@ class ComparePage extends Component<any> {
 
     return (
       <StyledComparedPage>
-        <Head>
-          <title>{`${member1.last_name} v. ${member2.last_name}`}</title>
-        </Head>
+        <TabTitle title={`${member1.last_name} v. ${member2.last_name}`} />
         <div className="members">
           <div>
             <Link href={`/member/${member1.id}`}>

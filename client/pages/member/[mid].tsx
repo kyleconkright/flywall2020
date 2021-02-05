@@ -5,13 +5,14 @@ import { connect } from "react-redux";
 import {
   RoleDashboard,
   getPartyColor,
-  getPieColors
+  getPieColors,
 } from "../../components/member-page/role-dashboard";
 import { ResponsiveBar } from "@nivo/bar";
 import { MemberRssFeed } from "../../components/member-page/rss-feed";
 import { Bar } from "../../components/charts/bar";
 import { ChamberOptions, ChamberNumber } from "../../redux/sagas";
 import { VoteCard, MemberVote } from "../../components/member-page/votes-list";
+import { TabTitle } from "../../components/head/head";
 interface Props {
   member?: any;
   latestCongress: number;
@@ -37,7 +38,7 @@ class MemberIdPage extends Component<Props> {
   }
 
   state = {
-    congress: this.props.latestCongress
+    congress: this.props.latestCongress,
   };
 
   render() {
@@ -48,17 +49,17 @@ class MemberIdPage extends Component<Props> {
     const latestInfo = member.roles[0];
     const { party } = latestInfo;
     const selectedRole = member.roles.find(
-      r => r.congress === this.state.congress
+      (r) => r.congress === this.state.congress
     );
 
     return (
       <div>
         <hr></hr>
-        <Head>
-          <title>{`${member.first_name} ${member.middle_name || ""} ${
+        <TabTitle
+          title={`${member.first_name} ${member.middle_name || ""} ${
             member.last_name
-          } (${party} - ${latestInfo.state})`}</title>
-        </Head>
+          } (${party} - ${latestInfo.state})`}
+        />
         <div>
           <div>
             ({party} - {latestInfo.state}) {member.first_name}{" "}
@@ -79,7 +80,7 @@ class MemberIdPage extends Component<Props> {
                 <div
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "1fr 1fr 1fr"
+                    gridTemplateColumns: "1fr 1fr 1fr",
                   }}
                 >
                   <div>Office: {latestInfo.office}</div>
@@ -100,7 +101,7 @@ class MemberIdPage extends Component<Props> {
                 acc.push({
                   id: r.congress,
                   "Voted Against Party": r.votes_against_party_pct,
-                  "Voted With Party": r.votes_with_party_pct
+                  "Voted With Party": r.votes_with_party_pct,
                 });
                 return acc;
               }, [])}
@@ -111,14 +112,16 @@ class MemberIdPage extends Component<Props> {
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr 1fr",
-              gridGap: "3px"
+              gridGap: "3px",
             }}
           >
             <select
               value={this.state.congress}
-              onChange={e => this.setState({ congress: e.currentTarget.value })}
+              onChange={(e) =>
+                this.setState({ congress: e.currentTarget.value })
+              }
             >
-              {member.roles.map(r => (
+              {member.roles.map((r) => (
                 <option value={r.congress} key={r.congress}>
                   {r.congress}
                 </option>
@@ -134,7 +137,7 @@ class MemberIdPage extends Component<Props> {
   }
 }
 
-export default connect(state => state)(MemberIdPage);
+export default connect((state) => state)(MemberIdPage);
 
 export function formatDate(date: string): string {
   return new Date(date).toLocaleDateString();

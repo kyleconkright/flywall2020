@@ -5,6 +5,7 @@ import { Component } from "react";
 import { connect } from "react-redux";
 import { Bill } from "../bills";
 import Link from "next/link";
+import { TabTitle } from "../../components/head/head";
 
 interface Props {
   bill?: Bill;
@@ -44,9 +45,7 @@ class BillIdPage extends Component<Props> {
 
     return (
       <div>
-        <Head>
-          <title>{`BIll ${bill.number}`}</title>
-        </Head>
+        <TabTitle title={`BIll ${bill.number}`} />
         <div>
           <div className="header">
             <div className="title">{bill.title}</div>
