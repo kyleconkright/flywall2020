@@ -15,4 +15,5 @@
 - [ ] CRON jobs for data
 - [ ] State/Local Data?
 - [ ] Marketing / Profit
-- [ ] Add Twitter Profile Pages
+- [ ] Add Twitter to Project
+- [ ] Create Basic Component for eanch section
