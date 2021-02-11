@@ -23,13 +23,15 @@ interface Props {
   chamber?: ChamberOptions;
   chamberNumber?: ChamberNumber;
   dispatch?: Dispatch;
-
   updateChamber(d: ChamberOptions): void;
   updateChamberNumber(d: ChamberNumber): void;
   loadMembers(chamber: ChamberOptions, chamberNumber: ChamberNumber): void;
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+  margin: auto;
+`;
 
 const Controls = styled.div``;
 

@@ -44,7 +44,7 @@ class BillsComponent extends Component<Props> {
   render() {
     console.log(this.props.bills);
     return (
-      <div>
+      <div style={{ width: "100%", margin: "auto" }}>
         <TabTitle title="Bills" />
         <div style={{ padding: "4px" }}>
           <div>

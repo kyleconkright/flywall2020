@@ -20,11 +20,11 @@ interface Props {
 }
 
 const chartSizes = { height: "1000px" };
-class CongressBreakDown extends Component<Props> {
-  static async getInitialProps(props) {
+export class CongressBreakDown extends Component<Props> {
+  static getInitialProps(props) {
     const { isServer, store } = props.ctx;
     const { chamberNumber } = store.getState();
-
+    console.log("CHMAGE ", chamberNumber);
     try {
       store.dispatch(loadFullCongress(chamberNumber));
       return { isServer, store };
@@ -172,7 +172,7 @@ class CongressBreakDown extends Component<Props> {
 
     const houseSize = Math.ceil(Math.sqrt(house.length));
     return (
-      <div>
+      <div style={{ width: "100%", margin: "auto" }}>
         <TabTitle title="Congress" />
         <div>{this.renderOptions(HouseCongressOptions)} Congress</div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>

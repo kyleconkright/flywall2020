@@ -1,24 +1,35 @@
 import React from "react";
-import styled from "styled-components";
-import { TabTitle } from "../components/head/head";
 
+import { connect } from "react-redux";
+import styled from "styled-components";
+
+import { TabTitle } from "../components/head/head";
+import Members from "./members";
+import Congress from "./congress";
+import Bills from "./bills";
 interface Props {}
 
-const Home: React.FC<Props> = () => {
+const Home: React.FC<Props> = (props: any) => {
   return (
     <div>
       <TabTitle title="FlyWall - Home" />
       <HomeLayout>
-        <div className="widget-content members-widget">members-widget</div>
-        <div className="widget-content bills-widget">bills-widget</div>
+        <div className="widget-content members-widget">
+          <Members {...props} />
+        </div>
+        <div className="widget-content bills-widget">
+          <Bills {...props} />
+        </div>
         <div className="widget-content twitter-widget">twitter-widget</div>
-        <div className="widget-content congress-widget">congress-widget</div>
+        <div className="widget-content congress-widget">
+          <Congress {...props} />
+        </div>
       </HomeLayout>
     </div>
   );
 };
 
-export default Home;
+export default connect((state) => state)(Home);
 
 const HomeLayout = (props) => {
   return <StyledLayout>{props.children}</StyledLayout>;
@@ -27,7 +38,8 @@ const HomeLayout = (props) => {
 const StyledLayout = styled.div`
   display: grid;
   grid-template-areas: "members-widget members-widget bills-widget" "twitter-widget congress-widget congress-widget";
-  grid-template-rows: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-rows: repeat(auto-fill, 500px);
+  grid-template-columns: repeat(3, 1fr);
   min-height: 100vh;
   grid-gap: 15px;
   .widget-content {
@@ -39,9 +51,11 @@ const StyledLayout = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: scroll;
   }
   .members-widget {
     grid-area: members-widget;
+    width: 100%;
   }
   .bills-widget {
     grid-area: bills-widget;
@@ -55,5 +69,6 @@ const StyledLayout = styled.div`
 
   @media (max-width: 900px) {
     grid-template-areas: "members-widget" "bills-widget" "twitter-widget" " congress-widget";
+    grid-template-columns: 1fr;
   }
 `;
