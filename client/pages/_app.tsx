@@ -11,6 +11,7 @@ import SideNav from "../components/side-nav";
 
 const layoutStyle = {
   display: "grid",
+  background: "#F6F7F9",
 };
 
 class FlywallApp extends App<{ store: Store }> {
@@ -32,9 +33,9 @@ class FlywallApp extends App<{ store: Store }> {
           <Header />
           <div
             style={{
-              marginTop: "60px",
+              marginTop: "62px",
               display: "grid",
-              gridTemplateRows: "30px 1fr",
+              gridTemplateColumns: "auto 1fr",
               gridGap: "3px",
             }}
           >

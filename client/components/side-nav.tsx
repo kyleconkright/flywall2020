@@ -41,22 +41,27 @@ export default SideNav;
 
 const StyleNav = styled.div`
   display: grid;
+  background: #b4fce3;
   align-items: center;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  grid-column-gap: 4px;
+  grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
+  grid-gap: 4px;
   width: 100%;
+  padding: 2px;
+  min-height: 100vh;
   a {
-    background: ${theme.grey1};
+    padding: 10px;
+    box-shadow: 0px 0px 2px 0px ${theme.green};
+    background: #59c7a0;
     height: 100%;
     display: flex;
+    color: white;
     justify-content: center;
     align-items: center;
     &:hover {
-      background: ${theme.grey2};
+      background: ${theme.green};
     }
     &.active {
-      background: white;
-      border: 2px solid ${theme.grey1};
+      background: ${theme.green};
       border-bottom: none;
     }
   }
