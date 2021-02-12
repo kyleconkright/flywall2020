@@ -1,3 +1,4 @@
+import React from "react";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
@@ -8,6 +9,7 @@ import createStore from "../redux/store";
 import "./../styles/stylesheet.scss";
 import Header from "../components/header";
 import SideNav from "../components/side-nav";
+import Head from "next/head";
 
 const layoutStyle = {
   display: "grid",
@@ -30,6 +32,9 @@ class FlywallApp extends App<{ store: Store }> {
     return (
       <Provider store={store}>
         <main style={layoutStyle}>
+          <Head>
+            <link rel="shortcut icon" href="../assets/images/fw_favicon.png" />
+          </Head>
           <Header />
           <div
             style={{
