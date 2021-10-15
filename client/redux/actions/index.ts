@@ -16,6 +16,7 @@ export const actionTypes = {
   SEARCH_BILLS: "SEARCH_BILLS",
   SEARCH_BILLS_SUCCESS: "SEARCH_BILLS_SUCCESS",
   SEARCH_BILLS_QUERY_UPDATE: "SEARCH_BILLS_QUERY_UPDATE"
+
 };
 
 export function failure(error) {
@@ -36,25 +37,8 @@ export function loadMembers(
   };
 }
 
-export function loadMembersSuccess(members: any[]) {
-  return { type: actionTypes.LOAD_MEMBERS_SUCCESS, payload: { members } };
-}
-
-export function loadMembersClient(
-  chamber: ChamberOptions,
-  chamberNumber: ChamberNumber
-) {
-  return {
-    type: actionTypes.LOAD_MEMBERS_CLIENT,
-    payload: { chamber, chamberNumber }
-  };
-}
-
-export function loadMembersClientSuccess(members: any[] = []) {
-  return {
-    type: actionTypes.LOAD_MEMBERS_CLIENT_SUCCESS,
-    payload: { members }
-  };
+export function loadMembersSuccess(members: any[], chamber) {
+  return { type: actionTypes.LOAD_MEMBERS_SUCCESS, payload: { members, chamber } };
 }
 
 export function updateChamber(chamber: ChamberOptions) {

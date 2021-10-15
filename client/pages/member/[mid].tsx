@@ -7,10 +7,8 @@ import {
   getPartyColor,
   getPieColors,
 } from "../../components/member-page/role-dashboard";
-import { ResponsiveBar } from "@nivo/bar";
 import { MemberRssFeed } from "../../components/member-page/rss-feed";
 import { Bar } from "../../components/charts/bar";
-import { ChamberOptions, ChamberNumber } from "../../redux/sagas";
 import { VoteCard, MemberVote } from "../../components/member-page/votes-list";
 import { TabTitle } from "../../components/head/head";
 interface Props {
@@ -92,9 +90,8 @@ class MemberIdPage extends Component<Props> {
           </div>
           <hr></hr>
           <div>
-            <div>Party Line Vote</div>
+            <div>Vote History</div>
             <Bar
-              height="300px"
               colors={getPieColors(party)}
               data={member.roles.reduce((acc, r) => {
                 if (!r.votes_against_party_pct) return acc;

@@ -1,4 +1,7 @@
 import React from "react";
+
+import styled from "styled-components";
+
 import { theme } from "../../styles/theme";
 import { formatDate } from "../../pages/member/[mid]";
 import { Bar } from "../charts/bar";
@@ -45,7 +48,12 @@ votes_with_party_pct: 76.88
 votes_against_party_pct: 23.12
  */
 
-const chartSizes = { height: "300px" };
+const chartSizes = {};
+
+const StyledChartContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+`;
 
 export function RoleDashboard(props: Props) {
   const { role } = props;
@@ -83,14 +91,8 @@ export function RoleDashboard(props: Props) {
         VOTING HISTORY for {congress} Congress
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr"
-        }}
-      >
+      <StyledChartContainer>
         <Bar
-          {...chartSizes}
           data={[
             {
               id: "Bill Activity",
@@ -154,7 +156,7 @@ export function RoleDashboard(props: Props) {
             }
           ]}
         />
-      </div>
+      </StyledChartContainer>
     </div>
   );
 }

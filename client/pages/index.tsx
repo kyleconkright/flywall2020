@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
+
 import { TabTitle } from "../components/head/head";
 import Members from "./members";
 import Congress from "./congress";
@@ -65,6 +66,7 @@ const StyledLayout = styled.div`
   }
   .congress-widget {
     grid-area: congress-widget;
+
   }
 
   @media (max-width: 900px) {
@@ -72,3 +74,4 @@ const StyledLayout = styled.div`
     grid-template-columns: 1fr;
   }
 `;
+

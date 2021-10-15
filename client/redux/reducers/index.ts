@@ -1,7 +1,12 @@
+
 import { actionTypes } from "../actions/index";
 import { Task } from "redux-saga";
 import { ChamberOptions, ChamberNumber } from "../sagas";
 import { Bill } from "../../pages/bills";
+import { combineReducers } from 'redux'
+import members, { MemberState, DefaultMemberState } from './members';
+import menu, { MenuState, DefaultMenuState } from './menu';
+
 
 interface initState {
   fullCongress: { house: any[]; senate: any[] };
@@ -88,6 +93,22 @@ function reducer(state = defaultState, action) {
     default:
       return state;
   }
+
+
+
+export interface AppState {
+  members: MemberState,
+  menu: MenuState
 }
 
-export default reducer;
+export const DefaultAppState: AppState = {
+  members: DefaultMemberState,
+  menu: DefaultMenuState
+
+}
+
+
+export default combineReducers({
+  members,
+  menu
+})

@@ -1,6 +1,6 @@
 /* global fetch */
 
-import { all, call, delay, put, take, takeLatest } from "redux-saga/effects";
+import { all, put, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 import {
   actionTypes,
@@ -9,7 +9,8 @@ import {
   loadMembersClientSuccess,
   compareSuccessData,
   loadFullCongressSuccess,
-  searchBillsSuccess
+  searchBillsSuccess,
+  updateChamber
 } from "../actions";
 
 function* loadDataSaga(action?: {
@@ -22,11 +23,13 @@ function* loadDataSaga(action?: {
 
     const members = res.data.data[0].members;
 
-    yield put(loadMembersSuccess(members));
+    yield put(loadMembersSuccess(members, chamber));
+    yield put(updateChamber(chamber));
   } catch (err) {
     yield put(failure(err));
   }
 }
+
 function* loadFullCongressSaga(action?: { payload: { congressNumber: any } }) {
   const { congressNumber } = action.payload;
 
@@ -45,7 +48,6 @@ function* loadFullCongressSaga(action?: { payload: { congressNumber: any } }) {
     yield put(failure(err));
   }
 }
-
 function* loadMembersClientSaga(action?: {
   payload: { chamber: any; chamberNumber: any };
 }) {
@@ -61,6 +63,7 @@ function* loadMembersClientSaga(action?: {
     yield put(failure(err));
   }
 }
+
 function* compareMembersSaga(action?: { payload: any }) {
   const { chamber, chamberNumber, member1, member2 } = action.payload;
 

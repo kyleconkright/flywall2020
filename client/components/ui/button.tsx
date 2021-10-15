@@ -21,10 +21,8 @@ const StyledButton = styled.button`
 
 const Button = (props) => {
 
-  const [ buttonActive, setButtonState ] = useState(false);
-
   return (
-    <StyledButton className={buttonActive ? 'active' : null} onClick={() => { props.action(); setButtonState(!buttonActive)}}>{props.text}</StyledButton>
+    <StyledButton className={props.active ? 'active' : null} onClick={() => { props.action() }}>{props.text}</StyledButton>
   );
 }
 

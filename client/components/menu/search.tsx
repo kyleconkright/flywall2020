@@ -14,6 +14,7 @@ const Search = (props) => {
   return (
     <ul className="inline-list">
       <li className="mr-h">
+
         <Button
           action={() => props.handleSelect("senate", props.chamberNumber)}
           text="Senate"
@@ -24,13 +25,8 @@ const Search = (props) => {
           action={() => props.handleSelect("house", props.chamberNumber)}
           text="House"
         />
+
       </li>
-      {/* <form action="submit">
-          <select onChange={e => props.handleSelect(e.target.value)}>
-            <option value="senate">Senate</option>
-            <option value="house">House</option>
-          </select>
-      </form> */}
     </ul>
   );
 };
@@ -41,6 +37,7 @@ const mapStateToProps = (state) => {
     chamberNumber: state.chamberNumber,
   };
 };
+
 
 const mapDispatchToProps = (dispatch) => {
   return {
