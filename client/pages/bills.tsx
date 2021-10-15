@@ -42,7 +42,6 @@ class BillsComponent extends Component<Props> {
   debounceSearchBills = debounce(this.searchBills, 1001);
 
   render() {
-    console.log(this.props.bills);
     return (
       <div style={{ width: "100%", margin: "auto" }}>
         <TabTitle title="Bills" />

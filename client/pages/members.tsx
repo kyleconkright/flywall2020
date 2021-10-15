@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   loadMembers,
@@ -14,7 +14,7 @@ import {
   HouseCongressOptions,
 } from "../helpers/data/congresses";
 import Router from "next/router";
-import Head from "next/head";
+
 import { TabTitle } from "../components/head/head";
 
 interface Props {
@@ -45,6 +45,7 @@ export const Grid = styled.ul`
 class MembersListPage extends Component<Props> {
   static async getInitialProps(props) {
     const { isServer, store } = props.ctx;
+    console.log(" ... ", store.getState());
     const { chamber, chamberNumber } = store.getState();
 
     try {
@@ -98,14 +99,11 @@ class MembersListPage extends Component<Props> {
 
   render() {
     console.log("this.props", this.props);
+    const { chamberNumber, chamber = "" } = this.props;
     const members = this.props.members || [];
     return (
       <Container>
-        <TabTitle
-          title={`${this.props.chamber.toUpperCase()} - ${
-            this.props.chamberNumber
-          }`}
-        />
+        <TabTitle title={`${chamber.toUpperCase()} - ${chamberNumber}`} />
         <Controls>
           <form action="submit">
             <div>
@@ -167,6 +165,4 @@ function mapDispatchToProps() {
     );
 }
 
-export default connect((state) => {
-  return state;
-}, mapDispatchToProps)(MembersListPage);
+export default connect((state) => state, mapDispatchToProps)(MembersListPage);

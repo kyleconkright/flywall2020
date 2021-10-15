@@ -32,9 +32,6 @@ class FlywallApp extends App<{ store: Store }> {
     return (
       <Provider store={store}>
         <main style={layoutStyle}>
-          <Head>
-            <link rel="shortcut icon" href="../assets/images/fw_favicon.png" />
-          </Head>
           <Header />
           <div
             style={{

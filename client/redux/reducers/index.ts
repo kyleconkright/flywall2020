@@ -1,12 +1,20 @@
-
 import { actionTypes } from "../actions/index";
 import { Task } from "redux-saga";
 import { ChamberOptions, ChamberNumber } from "../sagas";
 import { Bill } from "../../pages/bills";
-import { combineReducers } from 'redux'
-import members, { MemberState, DefaultMemberState } from './members';
-import menu, { MenuState, DefaultMenuState } from './menu';
+import { combineReducers } from "redux";
+import members, { MemberState, DefaultMemberState } from "./members";
+import menu, { MenuState, DefaultMenuState } from "./menu";
 
+export interface AppState {
+  members: MemberState;
+  menu: MenuState;
+}
+
+export const DefaultAppState: AppState = {
+  members: DefaultMemberState,
+  menu: DefaultMenuState,
+};
 
 interface initState {
   fullCongress: { house: any[]; senate: any[] };
@@ -27,7 +35,7 @@ export const defaultState: initState = {
   chamberNumber: 117,
   fullCongress: null,
   billSearchQuery: "",
-  bills: []
+  bills: [],
 };
 
 function reducer(state = defaultState, action) {
@@ -35,80 +43,64 @@ function reducer(state = defaultState, action) {
     case actionTypes.FAILURE:
       return {
         ...state,
-        ...{ error: action.error }
+        ...{ error: action.error },
       };
     case actionTypes.UPDATE_CHAMBER:
       return {
         ...state,
-        ...{ chamber: action.payload.chamber }
+        ...{ chamber: action.payload.chamber },
       };
     case actionTypes.SEARCH_BILLS_QUERY_UPDATE:
       return {
         ...state,
-        billSearchQuery: action.payload.query
+        billSearchQuery: action.payload.query,
       };
     case actionTypes.SEARCH_BILLS_SUCCESS:
       return {
         ...state,
         bills: action.payload.bills,
-        billSearchQuery: action.payload.query
+        billSearchQuery: action.payload.query,
       };
     case actionTypes.UPDATE_CHAMBER_NUMBER:
       return {
         ...state,
-        ...{ chamberNumber: action.payload.chamberNumber }
+        ...{ chamberNumber: action.payload.chamberNumber },
       };
 
     case actionTypes.LOAD_MEMBERS:
       return {
-        ...state
+        ...state,
       };
     case actionTypes.GET_COMPARE_DATA:
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case actionTypes.COMPARE_DATA_SUCCESS:
       return {
         ...state,
-        compareInfo: action.payload
+        compareInfo: action.payload,
       };
     case actionTypes.LOAD_FULL_CONGRESS:
       return {
         ...state,
-        congressNumber: action.payload
+        congressNumber: action.payload,
       };
     case actionTypes.LOAD_FULL_CONGRESS_SUCCESS:
       return {
         ...state,
-        fullCongress: action.payload
+        fullCongress: action.payload,
       };
     case actionTypes.LOAD_MEMBERS_SUCCESS:
     case actionTypes.LOAD_MEMBERS_CLIENT_SUCCESS:
       return {
         ...state,
-        ...{ members: action.payload.members }
+        ...{ members: action.payload.members },
       };
 
     default:
       return state;
   }
-
-
-
-export interface AppState {
-  members: MemberState,
-  menu: MenuState
 }
 
-export const DefaultAppState: AppState = {
-  members: DefaultMemberState,
-  menu: DefaultMenuState
-
-}
-
-
-export default combineReducers({
-  members,
-  menu
-})
+export default reducer;

@@ -6,11 +6,10 @@ import {
   actionTypes,
   loadMembersSuccess,
   failure,
-  loadMembersClientSuccess,
   compareSuccessData,
   loadFullCongressSuccess,
   searchBillsSuccess,
-  updateChamber
+  updateChamber,
 } from "../actions";
 
 function* loadDataSaga(action?: {
@@ -20,9 +19,7 @@ function* loadDataSaga(action?: {
 
   try {
     const res: any = yield axios.get(formatMemberUrl(chamber, chamberNumber));
-
     const members = res.data.data[0].members;
-
     yield put(loadMembersSuccess(members, chamber));
     yield put(updateChamber(chamber));
   } catch (err) {
@@ -58,7 +55,7 @@ function* loadMembersClientSaga(action?: {
 
     const members = res.data.data[0].members;
 
-    yield put(loadMembersClientSuccess(members));
+    yield put(loadMembersSuccess(members, chamberNumber));
   } catch (err) {
     yield put(failure(err));
   }
@@ -86,7 +83,7 @@ function* searchBillsSaga(action?: { payload: { query: string } }) {
     const res: any = yield axios.post(
       `http://localhost:2020/api/bills/search`,
       {
-        query
+        query,
       }
     );
 
@@ -104,7 +101,7 @@ function* rootSaga() {
     takeLatest(actionTypes.LOAD_MEMBERS_CLIENT, loadMembersClientSaga),
     takeLatest(actionTypes.GET_COMPARE_DATA, compareMembersSaga),
     takeLatest(actionTypes.LOAD_FULL_CONGRESS, loadFullCongressSaga),
-    takeLatest(actionTypes.SEARCH_BILLS, searchBillsSaga)
+    takeLatest(actionTypes.SEARCH_BILLS, searchBillsSaga),
   ]);
 }
 
