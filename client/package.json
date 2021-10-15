@@ -41,6 +41,7 @@
     "@types/redux": "^3.6.0",
     "@types/redux-devtools-extension": "^2.13.2",
     "@types/redux-saga": "^0.10.5",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "webpack": "^4.44.2"
   }
 }
