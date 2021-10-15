@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // import { DatabaseClient } from '../database';
 // const firebase = new DatabaseClient();
 const members_1 = require("../controllers/members");
-const sessions_1 = require("../controllers/sessions");
+const bills_1 = require("../controllers/bills");
 class Routes {
     routes(app) {
         app.route("/").get((req, res) => {
@@ -23,10 +23,25 @@ class Routes {
         //   }
         // });
         app.get("/api/members/:chamber/:chamberNumber", members_1.getMembers);
-        app.get("/api/compare/:member1/:member2/:chamber/:congressNumber", members_1.getCompareMembers);
+        //     GET https://api.propublica.org/congress/v1/members/{chamber}/{state}/current.json
+        app.get("/api/members/senate/:state/current", (req, res) => res.json({ senate: "for state" }));
+        // GET https://api.propublica.org/congress/v1/members/{chamber}/{state}/{district}/current.json
+        app.get("/api/members/house/:state/:district/current", (req, res) => res.json({ house: "members for district" }));
+        // "https://api.propublica.org/congress/v1/:congress/:chamber/members/leaving.json"
+        app.get("/api/members/leaving/:congress/:chamber", (req, res) => res.json({ weAre: "leaving" }));
         app.get("/api/member/:memberId", members_1.getMember);
         app.get("/api/member/:memberId/votes", members_1.getMemberVotes);
-        app.get("/api/session/:session/:rollCall", sessions_1.getSession);
+        app.get("/api/compare/:member1/:member2/:chamber/:congressNumber", members_1.getCompareMembers);
+        // https://api.propublica.org/congress/v1/members/{member-id}/office_expenses/{year}/{quarter}.json
+        app.get("/api/member/:memberId/:year/:quarter/spending", (req, res) => res.json({ member: "spending" }));
+        // app.get("/api/session/:session/:rollCall", getSession);
+        // app.get("/api/session/:session/:rollCall", getSession);
+        /////////////////////////////////////////////////////
+        //////////////        BILLS          ////////////////
+        /////////////////////////////////////////////////////
+        // https://api.propublica.org/congress/v1/bills/search.json?query={query}
+        app.post("/api/bills/search", bills_1.searchBills);
+        app.post("/api/bills/single", bills_1.singleBill);
     }
 }
 exports.Routes = Routes;

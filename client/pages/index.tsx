@@ -1,117 +1,77 @@
-import { Component } from "react";
+import React from "react";
+
 import { connect } from "react-redux";
-import {
-  loadMembers,
-  updateChamber,
-  updateChamberNumber
-} from "../redux/actions";
 import styled from "styled-components";
-import MemberCard from "../components/member-card";
-import { ChamberOptions, ChamberNumber } from "../redux/sagas";
-import { Dispatch, bindActionCreators } from "redux";
-import { selectMembers } from "../redux/selectors/members";
 
-import Router from "next/router";
-import Head from "next/head";
 
-interface Props {
-  members?: any;
-  isServer?: boolean;
-  chamber?: ChamberOptions;
-  chamberNumber?: ChamberNumber;
-  dispatch?: Dispatch;
+import { TabTitle } from "../components/head/head";
+import Members from "./members";
+import Congress from "./congress";
+import Bills from "./bills";
+interface Props {}
 
-  updateChamber(d: ChamberOptions): void;
-  updateChamberNumber(d: ChamberNumber): void;
-  loadMembers(chamber: ChamberOptions, chamberNumber: ChamberNumber): void;
-}
+const Home: React.FC<Props> = (props: any) => {
+  return (
+    <div>
+      <TabTitle title="FlyWall - Home" />
+      <HomeLayout>
+        <div className="widget-content members-widget">
+          <Members {...props} />
+        </div>
+        <div className="widget-content bills-widget">
+          <Bills {...props} />
+        </div>
+        <div className="widget-content twitter-widget">twitter-widget</div>
+        <div className="widget-content congress-widget">
+          <Congress {...props} />
+        </div>
+      </HomeLayout>
+    </div>
+  );
+};
 
-const Container = styled.div``;
+export default connect((state) => state)(Home);
 
-export const Grid = styled.ul`
+const HomeLayout = (props) => {
+  return <StyledLayout>{props.children}</StyledLayout>;
+};
+
+const StyledLayout = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 1rem;
-  padding: 1rem;
-  margin: 57px 0 0;
+  grid-template-areas: "members-widget members-widget bills-widget" "twitter-widget congress-widget congress-widget";
+  grid-template-rows: repeat(auto-fill, 500px);
+  grid-template-columns: repeat(3, 1fr);
+  min-height: 100vh;
+  grid-gap: 15px;
+  .widget-content {
+    border-radius: 3px;
+    background: white;
+    padding: 5px;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
+      0 1px 3px 1px rgb(60 64 67 / 15%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+  }
+  .members-widget {
+    grid-area: members-widget;
+    width: 100%;
+  }
+  .bills-widget {
+    grid-area: bills-widget;
+  }
+  .twitter-widget {
+    grid-area: twitter-widget;
+  }
+  .congress-widget {
+    grid-area: congress-widget;
+
+  }
+
+  @media (max-width: 900px) {
+    grid-template-areas: "members-widget" "bills-widget" "twitter-widget" " congress-widget";
+    grid-template-columns: 1fr;
+  }
 `;
 
-class MembersListPage extends Component<Props> {
-  static async getInitialProps(props) {
-    const { isServer, store } = props.ctx;
-    const { members, menu } = store.getState();
-
-    try {
-      store.dispatch(loadMembers('senate', menu.congress));
-      return { isServer, store };
-    } catch (error) {
-      console.error(error);
-      return { isServer, store };
-    }
-  }
-
-
-
-  state = {
-    compareMode: false,
-    member1: null,
-    member2: null
-  };
-
-  setCompareMembers = (id: string) => {
-    if (this.state.member1) {
-      this.setState({ member2: id }, () => {
-        Router.push(
-          `/compare/${this.state.member1}/${this.state.member2}/${this.props.chamber}/${this.props.chamberNumber}`
-        );
-      });
-    } else {
-      this.setState({ member1: id });
-    }
-  };
-
-  render() {
-    const members = Object.values(this.props.members.senate);
-
-    return (
-      <Container>
-        <Head>
-          <title>Flywall - {` ${
-            this.props.chamberNumber
-          }`}</title>
-        </Head>
-        <Grid>
-          {members.map((member: any) => {
-            return (
-              <MemberCard
-                selectedMembers={[this.state.member1, this.state.member2]}
-                setCompareMembers={this.setCompareMembers}
-                compareMode={this.state.compareMode}
-                key={member.id}
-                member={member}
-              />
-            );
-          })}
-        </Grid>
-      </Container>  
-    );
-  }
-}
-
-function mapDispatchToProps() {
-  return dispatch =>
-    bindActionCreators(
-      { updateChamber, loadMembers, updateChamberNumber },
-      dispatch
-    );
-}
-
-// const mapStateToProps = (state) => {
-//   return {
-//     members: selectMembers(state),
-//   }
-// }
-
-export default connect(state => {
-  return state;
-}, mapDispatchToProps)(MembersListPage);

@@ -36,6 +36,13 @@ export function compareMembers(
 ) {
   return `https://api.propublica.org/congress/v1/members/${member1}/votes/${member2}/${congress}/${chamber}.json`;
 }
+export function createSearchBills(query: string = "") {
+  return `https://api.propublica.org/congress/v1/bills/search.json?query=${query}`;
+}
+
+export function getSingleBill(billId: string, congress: string) {
+  return `https://api.propublica.org/congress/v1/${congress}/bills/${billId}.json`;
+}
 
 export const headers = {
   headers: { "X-API-Key": process.env.PROPUBLICA_KEY }

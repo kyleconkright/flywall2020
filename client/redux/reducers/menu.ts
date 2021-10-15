@@ -9,7 +9,7 @@ export interface MenuState {
 export const DefaultMenuState: MenuState = {
   senate: false,
   house: false,
-  congress: 116
+  congress: 117
 };
 
 function reducer(state = DefaultMenuState, action) {
